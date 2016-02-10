@@ -1,4 +1,4 @@
 use_frameworks!
 
-pod 'AFNetworking', '~> 2.5'
+pod 'AFNetworking'
 pod 'BDBOAuth1Manager'
