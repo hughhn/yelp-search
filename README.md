@@ -1,6 +1,6 @@
 # Project 2 - Yelp
 
-**Name of your app** is a Yelp search app using the [Yelp API](http://www.yelp.com/developers/documentation/v2/search_api).
+Yelp-search is a Yelp search app using the [Yelp API](http://www.yelp.com/developers/documentation/v2/search_api).
 
 Time spent: **X** hours spent in total
 
@@ -8,15 +8,15 @@ Time spent: **X** hours spent in total
 
 The following **required** functionality is completed:
 
-- [ ] Search results page
-- [ ] Table rows should be dynamic height according to the content height.
-- [ ] Custom cells should have the proper Auto Layout constraints.
+- [X] Search results page
+- [X] Table rows should be dynamic height according to the content height.
+- [X] Custom cells should have the proper Auto Layout constraints.
 - [ ] Search bar should be in the navigation bar (doesn't have to expand to show location like the real Yelp app does).
-- [ ] Filter page. Unfortunately, not all the filters are supported in the Yelp API.
+- [X] Filter page. Unfortunately, not all the filters are supported in the Yelp API.
 - [ ] The filters you should actually have are: category, sort (best match, distance, highest rated), distance, deals (on/off).
 - [ ] The filters table should be organized into sections as in the mock.
 - [ ] You can use the default UISwitch for on/off states.
-- [ ] Clicking on the "Search" button should dismiss the filters page and trigger the search w/ the new filter settings.
+- [X] Clicking on the "Search" button should dismiss the filters page and trigger the search w/ the new filter settings.
 - [ ] Display some of the available Yelp categories (choose any 3-4 that you want).
 
 The following **optional** features are implemented:
