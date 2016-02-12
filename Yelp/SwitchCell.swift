@@ -19,6 +19,11 @@ class SwitchCell: UITableViewCell {
     @IBOutlet weak var onSwitch: UISwitch!
     
     weak var delegate: SwitchCellDelegate?
+    var prefRowIdentifier: PrefRowIdentifier! {
+        didSet {
+            switchLabel?.text = prefRowIdentifier?.rawValue
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
