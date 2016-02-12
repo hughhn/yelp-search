@@ -80,9 +80,15 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func yelpCategories() -> [[String:String]] {
-        return [["name": "Afghan", "code": "afghani"],
-        ["name": "African", "code": "african"],
-        ["name": "American, New", "code": "newamerican"]]
+        return [
+        ["name": "French", "code": "french"],
+        ["name": "Korean", "code": "korean"],
+        ["name": "Japanese", "code": "japanese"],
+        ["name": "Sushi", "code": "sushi"],
+        ["name": "Tapas", "code": "tapas"],
+        ["name": "Thai", "code": "thai"],
+        ["name": "Vietnamese", "code": "vietnamese"]
+        ]
     }
 
 }

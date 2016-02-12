@@ -12,6 +12,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
 
     var businesses: [Business]!
     var searchBar = UISearchBar()
+    var currSearchTerm: String?
+    
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var actionBtn: UIBarButtonItem!
     
@@ -34,17 +36,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         navigationItem.titleView = searchBar
         searchBar.delegate = self
 
-        Business.searchWithTerm("Thai", completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            self.tableView.reloadData()
-        
-            if let businesses = businesses {
-                for business in businesses {
-                    print(business.name!)
-                    print(business.address!)
-                }
-            }
-        })
+        doSearch(nil)
 
 /* Example of Yelp search with more search options specified
         Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
@@ -56,6 +48,17 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
             }
         }
 */
+    }
+    
+    func doSearch(categories: [String]?) {
+        if currSearchTerm == nil {
+            currSearchTerm = "Restaurants"
+        }
+        Business.searchWithTerm(currSearchTerm!, sort: nil, categories: categories, deals: nil,
+            completion: { (businesses: [Business]!, error: NSError!) -> Void in
+                self.businesses = businesses
+                self.tableView.reloadData()
+        })
     }
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
@@ -93,11 +96,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
         let categories = filters["categories"] as? [String]
-        Business.searchWithTerm("Restaurants", sort: nil, categories: categories, deals: nil,
-            completion: { (businesses: [Business]!, error: NSError!) -> Void in
-                self.businesses = businesses
-                self.tableView.reloadData()
-        })
+        doSearch(categories)
     }
     
     // MARK: - Navigation
@@ -115,11 +114,9 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "filtersSegue" && actionBtn.title == "Search" {
-            Business.searchWithTerm(searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
-                self.businesses = businesses
-                self.tableView.reloadData()
-            })
+            currSearchTerm = searchBar.text!
             searchBarCancelButtonClicked(searchBar)
+            doSearch(nil)
             return false
         }
         
