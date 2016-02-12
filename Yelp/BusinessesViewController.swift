@@ -60,20 +60,14 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
+        actionBtn.title = "Search"
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
+        actionBtn.title = "Filters"
         searchBar.text = ""
         searchBar.resignFirstResponder()
-    }
-    
-    
-    func searchBar(searchBar: UISearchBar, textDidChange searchText: String) {
-//        Business.searchWithTerm(searchText, completion: { (businesses: [Business]!, error: NSError!) -> Void in
-//            self.businesses = businesses
-//            self.tableView.reloadData()
-//        })
     }
 
     override func didReceiveMemoryWarning() {
@@ -118,6 +112,18 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         
         filtersViewController.delegate = self
     }
-
+    
+    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
+        if identifier == "filtersSegue" && actionBtn.title == "Search" {
+            Business.searchWithTerm(searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+                self.businesses = businesses
+                self.tableView.reloadData()
+            })
+            searchBarCancelButtonClicked(searchBar)
+            return false
+        }
+        
+        return true
+    }
 
 }
