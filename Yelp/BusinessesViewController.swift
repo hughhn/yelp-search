@@ -55,7 +55,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         if currSearchTerm == nil {
             currSearchTerm = "Restaurants"
         }
-        Business.searchWithTerm(currSearchTerm!, sort: currPrefs.sortMode, distance: currPrefs.distance, categories: currPrefs.categories, deals: nil,
+        Business.searchWithTerm(currSearchTerm!, sort: currPrefs.sortMode, distance: currPrefs.distance, categories: currPrefs.categories, deals: currPrefs.deal,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.businesses = businesses
                 self.tableView.reloadData()
