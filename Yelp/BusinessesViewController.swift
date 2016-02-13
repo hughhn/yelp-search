@@ -13,7 +13,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     var businesses: [Business]!
     var searchBar = UISearchBar()
     var currSearchTerm: String?
-    var prefs = Preferences()
+    var currPrefs = Preferences()
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var actionBtn: UIBarButtonItem!
@@ -55,7 +55,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         if currSearchTerm == nil {
             currSearchTerm = "Restaurants"
         }
-        Business.searchWithTerm(currSearchTerm!, sort: prefs.sortMode, distance: prefs.distance, categories: prefs.categories, deals: nil,
+        Business.searchWithTerm(currSearchTerm!, sort: currPrefs.sortMode, distance: currPrefs.distance, categories: currPrefs.categories, deals: nil,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.businesses = businesses
                 self.tableView.reloadData()
@@ -100,7 +100,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func filtersViewController(filtersViewController: FiltersViewController, didUpdatePrefs newPrefs: Preferences) {
-        prefs = newPrefs
+        currPrefs = newPrefs
         doSearch()
     }
     
@@ -115,7 +115,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         let filtersViewController = navigationController.topViewController as! FiltersViewController
         
         filtersViewController.delegate = self
-        filtersViewController.currentPrefs = prefs
+        filtersViewController.prefs = currPrefs.copy() as! Preferences
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {

@@ -13,18 +13,6 @@ import UIKit
         didUpdatePrefs newPrefs: Preferences)
 }
 
-enum PrefRowIdentifier : String {
-    case Deal = "Deal"
-    case DistanceAuto = "Auto"
-    case Distance03 = "0.3 miles"
-    case Distance1 = "1 mile"
-    case Distance5 = "5 miles"
-    case Distance20 = "20 miles"
-    case SortBestMatch = "Best Match"
-    case SortDistance = "Distance"
-    case SortHighestRated = "Highest Rated"
-}
-
 class SectionInfo {
     var header: String?
     var expandable: Bool
@@ -50,11 +38,9 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBOutlet weak var tableView: UITableView!
     weak var delegate: FiltersViewControllerDelegate?
 
-    var currentPrefs: Preferences!
+    var prefs: Preferences!
     var categories: [Category]!
-    
     var tableStructure: [SectionInfo]!
-    var prefValues: [PrefRowIdentifier: Bool] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -66,7 +52,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     func initCategoriesSelected() {
         categories = yelpCategories()
         for (category) in categories {
-            category.selected = currentPrefs.categories.contains(category.code)
+            category.selected = prefs.categories.contains(category.code)
         }
     }
     
@@ -118,7 +104,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             
             cell.delegate = self
             cell.switchLabel.text = "Offering a Deal"
-            cell.onSwitch.on = currentPrefs.deal
+            cell.onSwitch.on = prefs.deal
             
             return cell
         } else if tableStructure[indexPath.section].sectionType == "Distance" {
@@ -127,13 +113,13 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             if tableStructure[indexPath.section].expanded {
                 let dropdownValue = YelpDistance.allValues[indexPath.row]
                 cell.dropdownLabel.text = dropdownValue.toDisplayString()
-                if dropdownValue == currentPrefs.distance {
+                if dropdownValue == prefs.distance {
                     cell.dropdownImg.image = UIImage(named: "icon_checked_circle")
                 } else {
                     cell.dropdownImg.image = UIImage(named: "icon_empty_circle")
                 }
             } else {
-                cell.dropdownLabel.text = currentPrefs.distance.toDisplayString()
+                cell.dropdownLabel.text = prefs.distance.toDisplayString()
                 cell.dropdownImg.image = UIImage(named: "icon_dropdown")
             }
             
@@ -144,13 +130,13 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             if tableStructure[indexPath.section].expanded {
                 let dropdownValue = YelpSortMode.allValues[indexPath.row]
                 cell.dropdownLabel.text = dropdownValue.toDisplayString()
-                if dropdownValue == currentPrefs.sortMode {
+                if dropdownValue == prefs.sortMode {
                     cell.dropdownImg.image = UIImage(named: "icon_checked_circle")
                 } else {
                     cell.dropdownImg.image = UIImage(named: "icon_empty_circle")
                 }
             } else {
-                cell.dropdownLabel.text = currentPrefs.sortMode.toDisplayString()
+                cell.dropdownLabel.text = prefs.sortMode.toDisplayString()
                 cell.dropdownImg.image = UIImage(named: "icon_dropdown")
             }
             
@@ -160,7 +146,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             
             cell.delegate = self
             cell.switchLabel.text = categories[indexPath.row].name
-            cell.onSwitch.on = currentPrefs.categories.contains(categories[indexPath.row].code)
+            cell.onSwitch.on = prefs.categories.contains(categories[indexPath.row].code)
             
             return cell
         }
@@ -168,7 +154,11 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool) {
         let indexPath = tableView.indexPathForCell(switchCell)!
-        categories[indexPath.row].selected = value
+        if tableStructure[indexPath.section].sectionType == "Deal" {
+            prefs.deal = value
+        } else if tableStructure[indexPath.section].sectionType == "Categories" {
+            categories[indexPath.row].selected = value
+        }
     }
 
     override func didReceiveMemoryWarning() {
@@ -186,9 +176,6 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func preferencesFromTableData() -> Preferences {
-        var newPrefs = Preferences()
-        //newPrefs.deal
-        
         var selectedCategories = [String]()
         for (category) in categories {
             if category.selected {
@@ -196,9 +183,9 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
         
-        newPrefs.categories = selectedCategories
+        prefs.categories = selectedCategories
         
-        return newPrefs
+        return prefs
     }
     
     func yelpCategories() -> [Category] {
