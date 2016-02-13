@@ -104,7 +104,7 @@ class YelpClient: BDBOAuth1RequestOperationManager {
         }
         
         if distance != nil && distance! != .DistanceAuto {
-            parameters["radius_filter"] = distance!.rawValue
+            parameters["radius_filter"] = round(distance!.rawValue * 1609.34)
         }
         
         if categories != nil && categories!.count > 0 {
