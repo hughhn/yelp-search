@@ -31,7 +31,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     weak var delegate: FiltersViewControllerDelegate?
 
     var currentPrefs: Preferences!
-    var categories: [[String:String]]!
+    var categories: [Category]!
     
     let tableStructure: [[PrefRowIdentifier]] = [
         [.Deal],
@@ -41,14 +41,23 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     var sectionExpanded = [true, false, false, true]
     
-    
-    var switchStates = [Int:Bool]()
     var prefValues: [PrefRowIdentifier: Bool] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        initCategoriesSelected()
+        initTableView()
+    }
+    
+    func initCategoriesSelected() {
         categories = yelpCategories()
+        for (category) in categories {
+            category.selected = currentPrefs.categories.contains(category.code)
+        }
+    }
+    
+    func initTableView() {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerNib(UINib(nibName: "SwitchCell", bundle: nil), forCellReuseIdentifier: "SwitchCell")
@@ -100,8 +109,8 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
             if indexPath.section == (tableStructure.count - 1) {
                 cell.delegate = self
-                cell.switchLabel.text = categories[indexPath.row]["name"]
-                cell.onSwitch.on = currentPrefs.categories.contains(categories[indexPath.row]["code"]!)
+                cell.switchLabel.text = categories[indexPath.row].name
+                cell.onSwitch.on = currentPrefs.categories.contains(categories[indexPath.row].code)
             } else {
                 let prefIdentifier = tableStructure[indexPath.section][indexPath.row]
                 cell.switchLabel.text = prefIdentifier.rawValue
@@ -118,7 +127,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool) {
         let indexPath = tableView.indexPathForCell(switchCell)!
-        switchStates[indexPath.row] = value
+        categories[indexPath.row].selected = value
     }
 
     override func didReceiveMemoryWarning() {
@@ -140,26 +149,27 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         //newPrefs.deal
         
         var selectedCategories = [String]()
-        for (row, isSelected) in switchStates {
-            if isSelected {
-                selectedCategories.append(categories[row]["code"]!)
+        for (category) in categories {
+            if category.selected {
+                selectedCategories.append(category.code)
             }
         }
         
         newPrefs.categories = selectedCategories
+        print(newPrefs)
         
         return newPrefs
     }
     
-    func yelpCategories() -> [[String:String]] {
+    func yelpCategories() -> [Category] {
         return [
-        ["name": "French", "code": "french"],
-        ["name": "Korean", "code": "korean"],
-        ["name": "Japanese", "code": "japanese"],
-        ["name": "Sushi", "code": "sushi"],
-        ["name": "Tapas", "code": "tapas"],
-        ["name": "Thai", "code": "thai"],
-        ["name": "Vietnamese", "code": "vietnamese"]
+            Category(name: "French", code: "french", selected: false),
+            Category(name: "Korean", code: "korean", selected: false),
+            Category(name: "Japanese", code: "japanese", selected: false),
+            Category(name: "Sushi", code: "sushi", selected: false),
+            Category(name: "Tapas", code: "tapas", selected: false),
+            Category(name: "Thai", code: "thai", selected: false),
+            Category(name: "Vietnamese", code: "vietnamese", selected: false)
         ]
     }
 

@@ -6,18 +6,31 @@
 //  Copyright © 2016 Timothy Lee. All rights reserved.
 //
 
-import Foundation
+import UIKit
 
 class Preferences: NSObject {
-    var
-    deal = false,
-    distanceAuto = true,
-    distance03 = false,
-    distance1 = false,
-    distance5 = false,
-    distance20 = false,
-    sortBestMatch = true,
-    sortDistance = false,
-    sortHighestRated = false,
-    categories = [String]()
+    var deal: Bool
+    var distanceAuto: Bool
+    var distance03: Bool
+    var distance1: Bool
+    var distance5: Bool
+    var distance20: Bool
+    var sortBestMatch: Bool
+    var sortDistance: Bool
+    var sortHighestRated: Bool
+    var categories: [String]
+    
+    override init() {
+        self.deal = false
+        self.distanceAuto = true
+        self.distance03 = false
+        self.distance1 = false
+        self.distance5 = false
+        self.distance20 = false
+        self.sortBestMatch = true
+        self.sortDistance = false
+        self.sortHighestRated = false
+        self.categories = [String]()
+    }
+    
 }
