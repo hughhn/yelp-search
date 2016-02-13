@@ -103,7 +103,7 @@ class YelpClient: BDBOAuth1RequestOperationManager {
             parameters["sort"] = sort!.rawValue
         }
         
-        if distance != nil {
+        if distance != nil && distance! != .DistanceAuto {
             parameters["radius_filter"] = distance!.rawValue
         }
         

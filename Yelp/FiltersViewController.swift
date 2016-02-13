@@ -90,7 +90,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
         }
         
-        tableView.deselectRowAtIndexPath(indexPath, animated: <#T##Bool#>)
+        tableView.deselectRowAtIndexPath(indexPath, animated: true)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
