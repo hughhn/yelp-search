@@ -13,6 +13,7 @@ class MapViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationItem.title = "Map"
         navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Locate", style: .Plain, target: self, action: "locateTapped")
         
         // Do any additional setup after loading the view.
