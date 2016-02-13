@@ -80,6 +80,14 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if tableStructure[indexPath.section].expandable {
+            if tableStructure[indexPath.section].expanded {
+                if tableStructure[indexPath.section].sectionType == "Distance" {
+                    prefs.distance = YelpDistance.allValues[indexPath.row]
+                } else if tableStructure[indexPath.section].sectionType == "Sort" {
+                    prefs.sortMode = YelpSortMode.allValues[indexPath.row]
+                }
+            }
+            
             tableStructure[indexPath.section].expanded = !tableStructure[indexPath.section].expanded
             
             // reload this section
