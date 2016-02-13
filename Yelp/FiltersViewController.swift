@@ -10,7 +10,7 @@ import UIKit
 
 @objc protocol FiltersViewControllerDelegate {
     optional func filtersViewController(filtersViewController: FiltersViewController,
-        didUpdateFilters filters: [String: AnyObject])
+        didUpdatePrefs newPrefs: Preferences)
 }
 
 enum PrefRowIdentifier : String {
@@ -28,25 +28,31 @@ enum PrefRowIdentifier : String {
 class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
-    
     weak var delegate: FiltersViewControllerDelegate?
 
+    var currentPrefs: Preferences!
     var categories: [[String:String]]!
-    var switchStates = [Int:Bool]()
     
     let tableStructure: [[PrefRowIdentifier]] = [
         [.Deal],
         [.DistanceAuto, .Distance03, .Distance1, .Distance5, .Distance20],
         [.SortBestMatch, .SortDistance, .SortHighestRated]]
     
+    var sectionExpanded = [true, false, false, true]
+    
+    
+    var switchStates = [Int:Bool]()
     var prefValues: [PrefRowIdentifier: Bool] = [:]
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
+        initTableData(currentPrefs)
         categories = yelpCategories()
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.registerNib(UINib(nibName: "SwitchCell", bundle: nil), forCellReuseIdentifier: "SwitchCell")
+        tableView.registerNib(UINib(nibName: "DropdownCell", bundle: nil), forCellReuseIdentifier: "DropdownCell")
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
@@ -66,27 +72,47 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         }
     }
     
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        if (indexPath.section == 1 || indexPath.section == 2) && indexPath.row == 0 {
+            ///put in your code to toggle your boolean value here
+            sectionExpanded[indexPath.section] = !sectionExpanded[indexPath.section]
+            
+            // reload this section
+            tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
+        }
+    }
+    
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if (section == tableStructure.count) {
             return categories.count
         } else {
-            return tableStructure[section].count
+            if sectionExpanded[section] {
+                return tableStructure[section].count
+            } else {
+                return 1
+            }
         }
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
         
-        if (indexPath.section == tableStructure.count) {
-            cell.switchLabel.text = categories[indexPath.row]["name"]
+        if (indexPath.section == tableStructure.count || indexPath.section == 0) {
+            let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+            if indexPath.section == tableStructure.count {
+                cell.switchLabel.text = categories[indexPath.row]["name"]
+            } else {
+                let prefIdentifier = tableStructure[indexPath.section][indexPath.row]
+                cell.switchLabel.text = prefIdentifier.rawValue
+            }
             cell.delegate = self
             cell.onSwitch.on = switchStates[indexPath.row] ?? false
+            return cell
         } else {
+            let cell = tableView.dequeueReusableCellWithIdentifier("DropdownCell", forIndexPath: indexPath) as! DropdownCell
             let prefIdentifier = tableStructure[indexPath.section][indexPath.row]
-            cell.prefRowIdentifier = prefIdentifier
+            cell.dropdownLabel.text = prefIdentifier.rawValue
+            return cell
         }
-        
-        return cell
     }
     
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool) {
@@ -106,8 +132,17 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
 
     @IBAction func onSearch(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
+        delegate?.filtersViewController?(self, didUpdatePrefs: preferencesFromTableData())
+    }
+    
+    func initTableData(prefs: Preferences) {
         
-        var filters = [String: AnyObject]()
+    }
+    
+    func preferencesFromTableData() -> Preferences {
+        var newPrefs = Preferences()
+        //newPrefs.deal
+        
         var selectedCategories = [String]()
         for (row, isSelected) in switchStates {
             if isSelected {
@@ -115,11 +150,9 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             }
         }
         
-        if selectedCategories.count > 0 {
-            filters["categories"] = selectedCategories
-        }
+        newPrefs.categories = selectedCategories
         
-        delegate?.filtersViewController?(self, didUpdateFilters: filters)
+        return newPrefs
     }
     
     func yelpCategories() -> [[String:String]] {

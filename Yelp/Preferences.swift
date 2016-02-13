@@ -8,7 +8,7 @@
 
 import Foundation
 
-class Preferences {
+class Preferences: NSObject {
     var
     deal = false,
     distanceAuto = true,
@@ -18,6 +18,6 @@ class Preferences {
     distance20 = false,
     sortBestMatch = true,
     sortDistance = false,
-    sortHighestRated = false
-    
+    sortHighestRated = false,
+    categories = [String]()
 }

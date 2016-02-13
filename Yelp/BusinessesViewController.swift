@@ -13,6 +13,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     var businesses: [Business]!
     var searchBar = UISearchBar()
     var currSearchTerm: String?
+    var prefs = Preferences()
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var actionBtn: UIBarButtonItem!
@@ -36,7 +37,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         navigationItem.titleView = searchBar
         searchBar.delegate = self
 
-        doSearch(nil)
+        doSearch()
 
 /* Example of Yelp search with more search options specified
         Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
@@ -50,11 +51,11 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
 */
     }
     
-    func doSearch(categories: [String]?) {
+    func doSearch() {
         if currSearchTerm == nil {
             currSearchTerm = "Restaurants"
         }
-        Business.searchWithTerm(currSearchTerm!, sort: nil, categories: categories, deals: nil,
+        Business.searchWithTerm(currSearchTerm!, sort: nil, categories: prefs.categories, deals: nil,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.businesses = businesses
                 self.tableView.reloadData()
@@ -94,9 +95,9 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         return cell
     }
     
-    func filtersViewController(filtersViewController: FiltersViewController, didUpdateFilters filters: [String : AnyObject]) {
-        let categories = filters["categories"] as? [String]
-        doSearch(categories)
+    func filtersViewController(filtersViewController: FiltersViewController, didUpdatePrefs newPrefs: Preferences) {
+        prefs = newPrefs
+        doSearch()
     }
     
     // MARK: - Navigation
@@ -110,13 +111,14 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         let filtersViewController = navigationController.topViewController as! FiltersViewController
         
         filtersViewController.delegate = self
+        filtersViewController.currentPrefs = prefs
     }
     
     override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
         if identifier == "filtersSegue" && actionBtn.title == "Search" {
             currSearchTerm = searchBar.text!
             searchBarCancelButtonClicked(searchBar)
-            doSearch(nil)
+            doSearch()
             return false
         }
         
