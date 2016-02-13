@@ -36,7 +36,8 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     let tableStructure: [[PrefRowIdentifier]] = [
         [.Deal],
         [.DistanceAuto, .Distance03, .Distance1, .Distance5, .Distance20],
-        [.SortBestMatch, .SortDistance, .SortHighestRated]]
+        [.SortBestMatch, .SortDistance, .SortHighestRated],
+        []]
     
     var sectionExpanded = [true, false, false, true]
     
@@ -46,8 +47,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        initTableData(currentPrefs)
+        
         categories = yelpCategories()
         tableView.delegate = self
         tableView.dataSource = self
@@ -56,7 +56,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func numberOfSectionsInTableView(tableView: UITableView) -> Int {
-        return tableStructure.count + 1
+        return tableStructure.count
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
@@ -83,7 +83,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if (section == tableStructure.count) {
+        if section == (tableStructure.count - 1) {
             return categories.count
         } else {
             if sectionExpanded[section] {
@@ -96,16 +96,17 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if (indexPath.section == tableStructure.count || indexPath.section == 0) {
+        if (indexPath.section == (tableStructure.count - 1) || indexPath.section == 0) {
             let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
-            if indexPath.section == tableStructure.count {
+            if indexPath.section == (tableStructure.count - 1) {
+                cell.delegate = self
                 cell.switchLabel.text = categories[indexPath.row]["name"]
+                cell.onSwitch.on = currentPrefs.categories.contains(categories[indexPath.row]["code"]!)
             } else {
                 let prefIdentifier = tableStructure[indexPath.section][indexPath.row]
                 cell.switchLabel.text = prefIdentifier.rawValue
             }
-            cell.delegate = self
-            cell.onSwitch.on = switchStates[indexPath.row] ?? false
+            
             return cell
         } else {
             let cell = tableView.dequeueReusableCellWithIdentifier("DropdownCell", forIndexPath: indexPath) as! DropdownCell
@@ -117,7 +118,6 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     func switchCell(switchCell: SwitchCell, didChangeValue value: Bool) {
         let indexPath = tableView.indexPathForCell(switchCell)!
-        
         switchStates[indexPath.row] = value
     }
 
@@ -133,10 +133,6 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     @IBAction func onSearch(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
         delegate?.filtersViewController?(self, didUpdatePrefs: preferencesFromTableData())
-    }
-    
-    func initTableData(prefs: Preferences) {
-        
     }
     
     func preferencesFromTableData() -> Preferences {
