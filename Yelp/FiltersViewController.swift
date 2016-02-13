@@ -93,7 +93,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if tableStructure[indexPath.section].expandable && indexPath.row == 0 {
+        if tableStructure[indexPath.section].expandable {
             tableStructure[indexPath.section].expanded = !tableStructure[indexPath.section].expanded
             
             // reload this section
