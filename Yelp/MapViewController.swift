@@ -7,22 +7,34 @@
 //
 
 import UIKit
+import MapKit
+
+@objc internal protocol MapViewControllerDelegate {
+    
+    optional func dismissMapViewController(mapViewController: MapViewController)
+}
 
 class MapViewController: UIViewController {
 
+    weak var delegate: MapViewControllerDelegate?
+    @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var listBtn: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        navigationItem.title = "Map"
-        navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Locate", style: .Plain, target: self, action: "locateTapped")
         
         // Do any additional setup after loading the view.
     }
     
-    func locateTapped() {
-        print("locateTapped")
+    override func viewDidLayoutSubviews() {
+        listBtn.layer.cornerRadius = 0.5 * listBtn.bounds.size.width
+        listBtn.clipsToBounds = true
     }
 
+    @IBAction func listBtnClicked(sender: AnyObject) {
+        delegate?.dismissMapViewController?(self)
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

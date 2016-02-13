@@ -7,6 +7,8 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="Yelp" customModuleProvider="target">
             <connections>
+                <outlet property="listBtn" destination="YWV-AB-faY" id="XKn-V0-m97"/>
+                <outlet property="mapView" destination="bLA-qj-IZW" id="8ia-YX-R9K"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -15,15 +17,34 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Hello" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bh5-aG-0Sh">
-                    <rect key="frame" x="141" y="273" width="39" height="21"/>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                    <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
-                    <nil key="highlightedColor"/>
-                </label>
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bLA-qj-IZW">
+                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                </mapView>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YWV-AB-faY">
+                    <rect key="frame" x="261" y="509" width="43" height="43"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="43" id="fVw-Jk-crd"/>
+                        <constraint firstAttribute="width" constant="43" id="kmE-Mj-3RQ"/>
+                    </constraints>
+                    <state key="normal" title="Button" image="icon_list"/>
+                    <connections>
+                        <action selector="listBtnClicked:" destination="-1" eventType="touchUpInside" id="2mp-5Z-shC"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <constraints>
+                <constraint firstAttribute="bottom" secondItem="YWV-AB-faY" secondAttribute="bottom" constant="16" id="MsP-tr-Pp7"/>
+                <constraint firstAttribute="bottom" secondItem="bLA-qj-IZW" secondAttribute="bottom" id="QUk-SB-exB"/>
+                <constraint firstAttribute="trailing" secondItem="YWV-AB-faY" secondAttribute="trailing" constant="16" id="Raz-fH-HWs"/>
+                <constraint firstItem="bLA-qj-IZW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dfF-sf-nP1"/>
+                <constraint firstAttribute="trailing" secondItem="bLA-qj-IZW" secondAttribute="trailing" id="lVB-oU-kF1"/>
+                <constraint firstItem="bLA-qj-IZW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xPa-rh-qrO"/>
+            </constraints>
             <point key="canvasLocation" x="278" y="353"/>
         </view>
     </objects>
+    <resources>
+        <image name="icon_list" width="43" height="43"/>
+    </resources>
 </document>

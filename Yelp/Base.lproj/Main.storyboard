@@ -122,7 +122,7 @@
                                     <constraint firstAttribute="height" constant="43" id="OTa-TJ-0Hp"/>
                                     <constraint firstAttribute="width" constant="43" id="ebq-pO-OL5"/>
                                 </constraints>
-                                <state key="normal" title="Button" image="icon_add"/>
+                                <state key="normal" title="Button" image="icon_map"/>
                                 <connections>
                                     <action selector="mapBtnClicked:" destination="2xI-yr-O5N" eventType="touchUpInside" id="M30-k2-p3O"/>
                                 </connections>
@@ -238,6 +238,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon_add" width="43" height="43"/>
+        <image name="icon_map" width="43" height="43"/>
     </resources>
 </document>

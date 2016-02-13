@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UIScrollViewDelegate, FiltersViewControllerDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UIScrollViewDelegate, FiltersViewControllerDelegate, MapViewControllerDelegate {
 
     var businesses = [Business]()
     var searchBar = UISearchBar()
@@ -61,8 +61,14 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     @IBAction func mapBtnClicked(sender: AnyObject) {
         let mapVC = MapViewController()
-        //navigationController?.presentViewController(mapVC, animated: true, completion: nil)
-        navigationController?.pushViewController(mapVC, animated: true)
+        mapVC.delegate = self
+        navigationController?.presentViewController(mapVC, animated: true, completion: nil)
+        
+        //navigationController?.pushViewController(mapVC, animated: true)
+    }
+    
+    func dismissMapViewController(mapViewController: MapViewController) {
+        dismissViewControllerAnimated(true, completion: nil)
     }
     
     func doSearch(offset: Int?) {
