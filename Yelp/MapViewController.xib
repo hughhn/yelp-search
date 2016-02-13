@@ -8,6 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MapViewController" customModule="Yelp" customModuleProvider="target">
             <connections>
                 <outlet property="listBtn" destination="YWV-AB-faY" id="XKn-V0-m97"/>
+                <outlet property="locationBtn" destination="XSB-Lo-XD2" id="mTc-GF-hjK"/>
                 <outlet property="mapView" destination="bLA-qj-IZW" id="8ia-YX-R9K"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
@@ -17,7 +18,7 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
             <subviews>
-                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="bLA-qj-IZW">
+                <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" showsUserLocation="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bLA-qj-IZW">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
                 </mapView>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YWV-AB-faY">
@@ -31,12 +32,25 @@
                         <action selector="listBtnClicked:" destination="-1" eventType="touchUpInside" id="2mp-5Z-shC"/>
                     </connections>
                 </button>
+                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XSB-Lo-XD2">
+                    <rect key="frame" x="16" y="522" width="30" height="30"/>
+                    <constraints>
+                        <constraint firstAttribute="width" constant="30" id="Pga-U5-zw0"/>
+                        <constraint firstAttribute="height" constant="30" id="oOg-6e-Nvb"/>
+                    </constraints>
+                    <state key="normal" title="Button"/>
+                    <connections>
+                        <action selector="locationBtnClicked:" destination="-1" eventType="touchUpInside" id="Z4s-lr-Phd"/>
+                    </connections>
+                </button>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
+                <constraint firstItem="XSB-Lo-XD2" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="16" id="51g-S8-6Bx"/>
                 <constraint firstAttribute="bottom" secondItem="YWV-AB-faY" secondAttribute="bottom" constant="16" id="MsP-tr-Pp7"/>
                 <constraint firstAttribute="bottom" secondItem="bLA-qj-IZW" secondAttribute="bottom" id="QUk-SB-exB"/>
                 <constraint firstAttribute="trailing" secondItem="YWV-AB-faY" secondAttribute="trailing" constant="16" id="Raz-fH-HWs"/>
+                <constraint firstAttribute="bottom" secondItem="XSB-Lo-XD2" secondAttribute="bottom" constant="16" id="RdI-E6-2wx"/>
                 <constraint firstItem="bLA-qj-IZW" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" id="dfF-sf-nP1"/>
                 <constraint firstAttribute="trailing" secondItem="bLA-qj-IZW" secondAttribute="trailing" id="lVB-oU-kF1"/>
                 <constraint firstItem="bLA-qj-IZW" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="xPa-rh-qrO"/>
