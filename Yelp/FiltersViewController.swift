@@ -25,6 +25,26 @@ enum PrefRowIdentifier : String {
     case SortHighestRated = "Highest Rated"
 }
 
+class SectionInfo {
+    var header: String?
+    var expandable: Bool
+    var expanded: Bool
+    var expandedSize: Int
+    var unexpandedSize: Int
+    var sectionType: String
+    
+    init(header: String?, expandable: Bool, expanded: Bool, expandedSize: Int, sectionType: String) {
+        if header != nil {
+            self.header = header
+        }
+        self.expandable = expandable
+        self.expanded = expanded
+        self.expandedSize = expandedSize
+        self.unexpandedSize = 1
+        self.sectionType = sectionType
+    }
+}
+
 class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate {
 
     @IBOutlet weak var tableView: UITableView!
@@ -33,14 +53,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     var currentPrefs: Preferences!
     var categories: [Category]!
     
-    let tableStructure: [[PrefRowIdentifier]] = [
-        [.Deal],
-        [.DistanceAuto, .Distance03, .Distance1, .Distance5, .Distance20],
-        [.SortBestMatch, .SortDistance, .SortHighestRated],
-        []]
-    
-    var sectionExpanded = [true, false, false, true]
-    
+    var tableStructure: [SectionInfo]!
     var prefValues: [PrefRowIdentifier: Bool] = [:]
     
     override func viewDidLoad() {
@@ -58,6 +71,13 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func initTableView() {
+        tableStructure = [
+            SectionInfo(header: nil, expandable: false, expanded: false, expandedSize: 1, sectionType: "Deal"),
+            SectionInfo(header: "Distance", expandable: true, expanded: false, expandedSize: YelpDistance.allValues.count, sectionType: "Distance"),
+            SectionInfo(header: "Sort By", expandable: true, expanded: false, expandedSize: YelpSortMode.allValues.count, sectionType: "Sort"),
+            SectionInfo(header: "Category", expandable: false, expanded: false, expandedSize: categories.count, sectionType: "Categories")
+        ]
+        
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerNib(UINib(nibName: "SwitchCell", bundle: nil), forCellReuseIdentifier: "SwitchCell")
@@ -69,22 +89,12 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
-        switch section {
-        case 1:
-            return "Distance"
-        case 2:
-            return "Sort By"
-        case 3:
-            return "Categories"
-        default:
-            return ""
-        }
+        return tableStructure[section].header
     }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        if (indexPath.section == 1 || indexPath.section == 2) && indexPath.row == 0 {
-            ///put in your code to toggle your boolean value here
-            sectionExpanded[indexPath.section] = !sectionExpanded[indexPath.section]
+        if tableStructure[indexPath.section].expandable && indexPath.row == 0 {
+            tableStructure[indexPath.section].expanded = !tableStructure[indexPath.section].expanded
             
             // reload this section
             tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
@@ -94,35 +104,64 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == (tableStructure.count - 1) {
-            return categories.count
-        } else {
-            if sectionExpanded[section] {
-                return tableStructure[section].count
-            } else {
-                return 1
-            }
+        if tableStructure[section].expandable && !tableStructure[section].expanded {
+            return tableStructure[section].unexpandedSize
         }
+        
+        return tableStructure[section].expandedSize
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        if (indexPath.section == (tableStructure.count - 1) || indexPath.section == 0) {
+        if tableStructure[indexPath.section].sectionType == "Deal" {
             let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
-            if indexPath.section == (tableStructure.count - 1) {
-                cell.delegate = self
-                cell.switchLabel.text = categories[indexPath.row].name
-                cell.onSwitch.on = currentPrefs.categories.contains(categories[indexPath.row].code)
+            
+            cell.delegate = self
+            cell.switchLabel.text = "Offering a Deal"
+            cell.onSwitch.on = currentPrefs.deal
+            
+            return cell
+        } else if tableStructure[indexPath.section].sectionType == "Distance" {
+            let cell = tableView.dequeueReusableCellWithIdentifier("DropdownCell", forIndexPath: indexPath) as! DropdownCell
+            
+            if tableStructure[indexPath.section].expanded {
+                let dropdownValue = YelpDistance.allValues[indexPath.row]
+                cell.dropdownLabel.text = dropdownValue.toDisplayString()
+                if dropdownValue == currentPrefs.distance {
+                    cell.dropdownImg.image = UIImage(named: "icon_checked_circle")
+                } else {
+                    cell.dropdownImg.image = UIImage(named: "icon_empty_circle")
+                }
             } else {
-                let prefIdentifier = tableStructure[indexPath.section][indexPath.row]
-                cell.switchLabel.text = prefIdentifier.rawValue
+                cell.dropdownLabel.text = currentPrefs.distance.toDisplayString()
+                cell.dropdownImg.image = UIImage(named: "icon_dropdown")
+            }
+            
+            return cell
+        } else if tableStructure[indexPath.section].sectionType == "Sort" {
+            let cell = tableView.dequeueReusableCellWithIdentifier("DropdownCell", forIndexPath: indexPath) as! DropdownCell
+            
+            if tableStructure[indexPath.section].expanded {
+                let dropdownValue = YelpSortMode.allValues[indexPath.row]
+                cell.dropdownLabel.text = dropdownValue.toDisplayString()
+                if dropdownValue == currentPrefs.sortMode {
+                    cell.dropdownImg.image = UIImage(named: "icon_checked_circle")
+                } else {
+                    cell.dropdownImg.image = UIImage(named: "icon_empty_circle")
+                }
+            } else {
+                cell.dropdownLabel.text = currentPrefs.sortMode.toDisplayString()
+                cell.dropdownImg.image = UIImage(named: "icon_dropdown")
             }
             
             return cell
         } else {
-            let cell = tableView.dequeueReusableCellWithIdentifier("DropdownCell", forIndexPath: indexPath) as! DropdownCell
-            let prefIdentifier = tableStructure[indexPath.section][indexPath.row]
-            cell.dropdownLabel.text = prefIdentifier.rawValue
+            let cell = tableView.dequeueReusableCellWithIdentifier("SwitchCell", forIndexPath: indexPath) as! SwitchCell
+            
+            cell.delegate = self
+            cell.switchLabel.text = categories[indexPath.row].name
+            cell.onSwitch.on = currentPrefs.categories.contains(categories[indexPath.row].code)
+            
             return cell
         }
     }
