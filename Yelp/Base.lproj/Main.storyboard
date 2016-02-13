@@ -116,11 +116,24 @@
                                     </tableViewCell>
                                 </prototypes>
                             </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ny-Ct-TQG">
+                                <rect key="frame" x="261" y="509" width="43" height="43"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="43" id="OTa-TJ-0Hp"/>
+                                    <constraint firstAttribute="width" constant="43" id="ebq-pO-OL5"/>
+                                </constraints>
+                                <state key="normal" title="Button" image="icon_add"/>
+                                <connections>
+                                    <action selector="mapBtnClicked:" destination="2xI-yr-O5N" eventType="touchUpInside" id="M30-k2-p3O"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="lDI-al-8TM" firstAttribute="top" secondItem="XhR-oz-92f" secondAttribute="top" id="KFH-xU-2Lm"/>
+                            <constraint firstItem="VBY-gq-v8E" firstAttribute="top" secondItem="6ny-Ct-TQG" secondAttribute="bottom" constant="16" id="SM6-nf-tT3"/>
                             <constraint firstAttribute="trailing" secondItem="lDI-al-8TM" secondAttribute="trailing" id="WAw-Dw-Vqe"/>
+                            <constraint firstAttribute="trailing" secondItem="6ny-Ct-TQG" secondAttribute="trailing" constant="16" id="X7c-gI-QcH"/>
                             <constraint firstItem="VBY-gq-v8E" firstAttribute="top" secondItem="lDI-al-8TM" secondAttribute="bottom" id="XyQ-aW-tHl"/>
                             <constraint firstItem="lDI-al-8TM" firstAttribute="leading" secondItem="XhR-oz-92f" secondAttribute="leading" id="dgq-dl-FuT"/>
                         </constraints>
@@ -134,6 +147,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="actionBtn" destination="1DJ-1A-yRN" id="vDf-Co-fif"/>
+                        <outlet property="mapBtn" destination="6ny-Ct-TQG" id="JV6-wB-BKL"/>
                         <outlet property="tableView" destination="lDI-al-8TM" id="Hme-Pw-eEb"/>
                     </connections>
                 </viewController>
@@ -223,4 +237,7 @@
             <point key="canvasLocation" x="1862" y="338"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="icon_add" width="43" height="43"/>
+    </resources>
 </document>

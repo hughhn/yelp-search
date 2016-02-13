@@ -20,6 +20,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var actionBtn: UIBarButtonItem!
+    @IBOutlet weak var mapBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -51,6 +52,17 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.contentInset = insets
 
         doSearch(nil)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        mapBtn.layer.cornerRadius = 0.5 * mapBtn.bounds.size.width
+        mapBtn.clipsToBounds = true
+    }
+    
+    @IBAction func mapBtnClicked(sender: AnyObject) {
+        let mapVC = MapViewController()
+        //navigationController?.presentViewController(mapVC, animated: true, completion: nil)
+        navigationController?.pushViewController(mapVC, animated: true)
     }
     
     func doSearch(offset: Int?) {

@@ -14,6 +14,8 @@
 		0B1E8E511C6F0C0800FEE8AC /* SwitchCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B1E8E4F1C6F0C0800FEE8AC /* SwitchCell.xib */; };
 		0B1E8E531C6F317E00FEE8AC /* Category.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E8E521C6F317E00FEE8AC /* Category.swift */; };
 		0B1E8E591C6F5E4000FEE8AC /* InfiniteScrollActivityView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E8E581C6F5E4000FEE8AC /* InfiniteScrollActivityView.swift */; };
+		0B1E8E5C1C6FDCA700FEE8AC /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E8E5A1C6FDCA700FEE8AC /* MapViewController.swift */; };
+		0B1E8E5D1C6FDCA700FEE8AC /* MapViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B1E8E5B1C6FDCA700FEE8AC /* MapViewController.xib */; };
 		222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */; };
 		222D8A6019CCF9F900D2DB53 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A5E19CCF9F900D2DB53 /* Main.storyboard */; };
 		222D8A6219CCF9F900D2DB53 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 222D8A6119CCF9F900D2DB53 /* Images.xcassets */; };
@@ -45,6 +47,8 @@
 		0B1E8E4F1C6F0C0800FEE8AC /* SwitchCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = SwitchCell.xib; sourceTree = "<group>"; };
 		0B1E8E521C6F317E00FEE8AC /* Category.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Category.swift; sourceTree = "<group>"; };
 		0B1E8E581C6F5E4000FEE8AC /* InfiniteScrollActivityView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InfiniteScrollActivityView.swift; sourceTree = "<group>"; };
+		0B1E8E5A1C6FDCA700FEE8AC /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		0B1E8E5B1C6FDCA700FEE8AC /* MapViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MapViewController.xib; sourceTree = "<group>"; };
 		222D8A5519CCF9F900D2DB53 /* Yelp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Yelp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		222D8A5919CCF9F900D2DB53 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		222D8A5A19CCF9F900D2DB53 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -168,6 +172,8 @@
 			children = (
 				22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */,
 				9AFBD3221C6C0C070036D85E /* FiltersViewController.swift */,
+				0B1E8E5A1C6FDCA700FEE8AC /* MapViewController.swift */,
+				0B1E8E5B1C6FDCA700FEE8AC /* MapViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -287,6 +293,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				222D8A6019CCF9F900D2DB53 /* Main.storyboard in Resources */,
+				0B1E8E5D1C6FDCA700FEE8AC /* MapViewController.xib in Resources */,
 				222D8A6519CCF9F900D2DB53 /* LaunchScreen.xib in Resources */,
 				0B1E8E4D1C6F035300FEE8AC /* DropdownCell.xib in Resources */,
 				222D8A6219CCF9F900D2DB53 /* Images.xcassets in Resources */,
@@ -363,6 +370,7 @@
 				9AFBD3231C6C0C070036D85E /* FiltersViewController.swift in Sources */,
 				0B1E8E591C6F5E4000FEE8AC /* InfiniteScrollActivityView.swift in Sources */,
 				22AAAA991AEA0A9700A544AF /* Business.swift in Sources */,
+				0B1E8E5C1C6FDCA700FEE8AC /* MapViewController.swift in Sources */,
 				0B1E8E4C1C6F035300FEE8AC /* DropdownCell.swift in Sources */,
 				222D8A7D19CCFAE000D2DB53 /* YelpClient.swift in Sources */,
 				222D8A5B19CCF9F900D2DB53 /* AppDelegate.swift in Sources */,
