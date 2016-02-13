@@ -89,6 +89,8 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             // reload this section
             tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
         }
+        
+        tableView.deselectRowAtIndexPath(indexPath, animated: <#T##Bool#>)
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
@@ -156,7 +158,6 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         }
         
         newPrefs.categories = selectedCategories
-        print(newPrefs)
         
         return newPrefs
     }

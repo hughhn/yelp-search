@@ -40,7 +40,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         doSearch()
 
 /* Example of Yelp search with more search options specified
-        Business.searchWithTerm("Restaurants", sort: .Distance, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
+        Business.searchWithTerm("Restaurants", sort: .Distance, distance: nil, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             
             for business in businesses {
@@ -55,7 +55,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         if currSearchTerm == nil {
             currSearchTerm = "Restaurants"
         }
-        Business.searchWithTerm(currSearchTerm!, sort: nil, categories: prefs.categories, deals: nil,
+        Business.searchWithTerm(currSearchTerm!, sort: prefs.sortMode, distance: prefs.distance, categories: prefs.categories, deals: nil,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.businesses = businesses
                 self.tableView.reloadData()
