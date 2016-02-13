@@ -8,12 +8,15 @@
 
 import UIKit
 
-class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, FiltersViewControllerDelegate {
+class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UIScrollViewDelegate, FiltersViewControllerDelegate {
 
-    var businesses: [Business]!
+    var businesses = [Business]()
     var searchBar = UISearchBar()
     var currSearchTerm: String?
     var currPrefs = Preferences()
+    
+    var isMoreDataLoading = false
+    var loadingMoreView:InfiniteScrollActivityView?
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var actionBtn: UIBarButtonItem!
@@ -36,28 +39,38 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         // you just need to set the titleView to be the search bar
         navigationItem.titleView = searchBar
         searchBar.delegate = self
+        
+        // Set up Infinite Scroll loading indicator
+        let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+        loadingMoreView = InfiniteScrollActivityView(frame: frame)
+        loadingMoreView!.hidden = true
+        tableView.addSubview(loadingMoreView!)
+        
+        var insets = tableView.contentInset;
+        insets.bottom += InfiniteScrollActivityView.defaultHeight;
+        tableView.contentInset = insets
 
-        doSearch()
-
-/* Example of Yelp search with more search options specified
-        Business.searchWithTerm("Restaurants", sort: .Distance, distance: nil, categories: ["asianfusion", "burgers"], deals: true) { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
-            
-            for business in businesses {
-                print(business.name!)
-                print(business.address!)
-            }
-        }
-*/
+        doSearch(nil)
     }
     
-    func doSearch() {
+    func doSearch(offset: Int?) {
+        if offset == nil {
+            businesses.removeAll()
+            tableView.setContentOffset(CGPoint.zero, animated: true)
+            tableView.reloadData()
+        }
         if currSearchTerm == nil {
             currSearchTerm = "Restaurants"
         }
-        Business.searchWithTerm(currSearchTerm!, sort: currPrefs.sortMode, distance: currPrefs.distance, categories: currPrefs.categories, deals: currPrefs.deal,
+        Business.searchWithTerm(currSearchTerm!, sort: currPrefs.sortMode, distance: currPrefs.distance, categories: currPrefs.categories, deals: currPrefs.deal, offset: offset,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
-                self.businesses = businesses
+                
+                // Update flag
+                self.isMoreDataLoading = false
+                // Stop the loading indicator
+                self.loadingMoreView!.stopAnimating()
+                
+                self.businesses.appendContentsOf(businesses)
                 self.tableView.reloadData()
         })
     }
@@ -84,11 +97,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if businesses != nil {
-            return businesses.count
-        } else {
-            return 0
-        }
+        return businesses.count
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -101,7 +110,29 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     func filtersViewController(filtersViewController: FiltersViewController, didUpdatePrefs newPrefs: Preferences) {
         currPrefs = newPrefs
-        doSearch()
+        doSearch(nil)
+    }
+    
+    func scrollViewDidScroll(scrollView: UIScrollView) {
+        if isMoreDataLoading {
+            return
+        }
+        
+        // Calculate the position of one screen length before the bottom of the results
+        let scrollViewContentHeight = tableView.contentSize.height
+        let scrollOffsetThreshold = scrollViewContentHeight - tableView.bounds.size.height
+        
+        // When the user has scrolled past the threshold, start requesting
+        if(scrollView.contentOffset.y > scrollOffsetThreshold && tableView.dragging) {
+            isMoreDataLoading = true
+            
+            // Update position of loadingMoreView, and start loading indicator
+            let frame = CGRectMake(0, tableView.contentSize.height, tableView.bounds.size.width, InfiniteScrollActivityView.defaultHeight)
+            loadingMoreView?.frame = frame
+            loadingMoreView!.startAnimating()
+            
+            doSearch(businesses.count)
+        }
     }
     
     // MARK: - Navigation
@@ -122,7 +153,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         if identifier == "filtersSegue" && actionBtn.title == "Search" {
             currSearchTerm = searchBar.text!
             searchBarCancelButtonClicked(searchBar)
-            doSearch()
+            doSearch(nil)
             return false
         }
         
