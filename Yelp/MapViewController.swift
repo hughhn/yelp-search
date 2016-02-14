@@ -15,7 +15,7 @@ import CoreLocation
     optional func dismissMapViewController(mapViewController: MapViewController)
 }
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate, MKMapViewDelegate {
 
     weak var delegate: MapViewControllerDelegate?
     @IBOutlet weak var mapView: MKMapView!
@@ -27,6 +27,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     var rightBarBtn: UIBarButtonItem!
     
     var businesses: [Business]?
+    var centerLocation: MKPointAnnotation?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -50,6 +51,48 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
         locationManager.distanceFilter = 200
         locationManager.requestWhenInUseAuthorization()
+        
+        setupAnnotations()
+    }
+    
+    func setupAnnotations() {
+    }
+    
+    func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D) {
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = "An annotation!"
+        mapView.addAnnotation(annotation)
+    }
+    
+    func addCenterAnnotation(coordinate: CLLocationCoordinate2D) {
+        if centerLocation != nil {
+            mapView.removeAnnotation(centerLocation!)
+        }
+        centerLocation = MKPointAnnotation()
+        centerLocation!.coordinate = coordinate
+        centerLocation!.title = "Center"
+        mapView.addAnnotation(centerLocation!)
+    }
+    
+    func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        let identifier = "customAnnotationView"
+        
+        // custom pin annotation
+        var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView
+        if (annotationView == nil) {
+            annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
+        }
+        else {
+            annotationView!.annotation = annotation
+        }
+        if #available(iOS 9.0, *) {
+            annotationView!.pinTintColor = UIColor.greenColor()
+        } else {
+            // Fallback on earlier versions
+        }
+        
+        return annotationView
     }
     
     func goToLocation(location: CLLocation) {
@@ -70,6 +113,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
             let span = MKCoordinateSpanMake(0.1, 0.1)
             let region = MKCoordinateRegionMake(location.coordinate, span)
             mapView.setRegion(region, animated: false)
+            addCenterAnnotation(location.coordinate)
         }
     }
     
