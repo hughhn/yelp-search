@@ -137,11 +137,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
 //        leftImg.layer.cornerRadius = 5
         view.leftCalloutAccessoryView = leftBtn
         
-        let rightImg = UIImageView(frame: CGRectMake(0, 0, 83, 15))
-        rightImg.setImageWithURL((yelpAnnotation.business?.ratingImageURL)!)
-        rightImg.layer.masksToBounds = true
-        rightImg.layer.cornerRadius = 5
-        view.rightCalloutAccessoryView = rightImg
+        let rightBtn = UIButton(frame: CGRectMake(0, 0, 83, 15))
+        rightBtn.setImageForState(UIControlState.Normal, withURL: (yelpAnnotation.business?.ratingImageURL)!)
+        rightBtn.layer.masksToBounds = true
+        rightBtn.layer.cornerRadius = 5
+        view.rightCalloutAccessoryView = rightBtn
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
