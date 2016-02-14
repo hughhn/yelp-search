@@ -35,6 +35,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     var currLocation: CLLocation?
     var centerLocation: MKPointAnnotation?
+    let span = MKCoordinateSpanMake(0.03, 0.03)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -65,10 +66,10 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     }
     
     func loadAnnotations() {
-        if annotations.count > 0 {
-            mapView.removeAnnotations(annotations)
-            annotations.removeAll()
-        }
+//        if annotations.count > 0 {
+//            mapView.removeAnnotations(annotations)
+//            annotations.removeAll()
+//        }
         
         if businesses == nil || businesses!.count == 0 {
             return
@@ -82,14 +83,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
                     let annotation = YelpAnnotation(coordinate: plcmark.coordinate, business: business)
                     annotation.title = business.name!
                     self.mapView.addAnnotation(annotation)
-                    self.annotations.append(annotation)
+//                    self.annotations.append(annotation)
                 }
             })
         }
     }
     
     func goToLocation(location: CLLocation) {
-        let span = MKCoordinateSpanMake(0.05, 0.05)
         let region = MKCoordinateRegionMake(location.coordinate, span)
         mapView.setRegion(region, animated: false)
     }
@@ -103,7 +103,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            let span = MKCoordinateSpanMake(0.05, 0.05)
             let region = MKCoordinateRegionMake(location.coordinate, span)
             mapView.setRegion(region, animated: true)
             goToLocation(location)
