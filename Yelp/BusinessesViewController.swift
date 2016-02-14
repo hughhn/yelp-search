@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreLocation
 
 class BusinessesViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, UISearchBarDelegate, UIScrollViewDelegate, FiltersViewControllerDelegate, MapViewControllerDelegate {
 
@@ -14,6 +15,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     var searchBar = UISearchBar()
     var currSearchTerm: String?
     var currPrefs = Preferences()
+    var currLocation: CLLocation?
     
     var isMoreDataLoading = false
     var loadingMoreView:InfiniteScrollActivityView?
@@ -72,9 +74,18 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         navigationController?.popViewControllerAnimated(true)
     }
     
+    func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, completion: (([Business]!, NSError!) -> Void)!) {
+        currLocation = locationUpdated!
+        doSearch(nil, searchCompletion: { (businesses: [Business]!, error: NSError!) -> Void in
+            completion(businesses, error)
+        })
+    }
     
-    func mapViewController(mapViewController: MapViewController, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!) {
+    func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!) {
         currSearchTerm = searchTerm
+        if locationUpdated != nil {
+            currLocation = locationUpdated!
+        }
         doSearch(nil, searchCompletion: { (businesses: [Business]!, error: NSError!) -> Void in
             completion(businesses, error)
         })
@@ -89,7 +100,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         if currSearchTerm == nil {
             currSearchTerm = "Restaurants"
         }
-        Business.searchWithTerm(currSearchTerm!, sort: currPrefs.sortMode, distance: currPrefs.distance, categories: currPrefs.categories, deals: currPrefs.deal, offset: offset,
+        Business.searchWithTerm(currSearchTerm!, sort: currPrefs.sortMode, distance: currPrefs.distance, categories: currPrefs.categories, deals: currPrefs.deal, offset: offset, location: currLocation,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 
                 // Update flag

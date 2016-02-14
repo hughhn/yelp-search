@@ -5,7 +5,7 @@
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
     </dependencies>
     <scenes>
-        <!--Yelp-->
+        <!--Businesses View Controller-->
         <scene sceneID="5L9-Uz-lNK">
             <objects>
                 <viewController id="2xI-yr-O5N" customClass="BusinessesViewController" customModule="Yelp" customModuleProvider="target" sceneMemberID="viewController">
@@ -117,10 +117,10 @@
                                 </prototypes>
                             </tableView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6ny-Ct-TQG">
-                                <rect key="frame" x="261" y="509" width="43" height="43"/>
+                                <rect key="frame" x="239" y="487" width="65" height="65"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="43" id="OTa-TJ-0Hp"/>
-                                    <constraint firstAttribute="width" constant="43" id="ebq-pO-OL5"/>
+                                    <constraint firstAttribute="height" constant="65" id="OTa-TJ-0Hp"/>
+                                    <constraint firstAttribute="width" constant="65" id="ebq-pO-OL5"/>
                                 </constraints>
                                 <state key="normal" title="Button" image="icon_map"/>
                                 <connections>
@@ -138,7 +138,7 @@
                             <constraint firstItem="lDI-al-8TM" firstAttribute="leading" secondItem="XhR-oz-92f" secondAttribute="leading" id="dgq-dl-FuT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Yelp" id="rJ7-jb-TZO">
+                    <navigationItem key="navigationItem" id="rJ7-jb-TZO">
                         <barButtonItem key="leftBarButtonItem" title="Filters" id="1DJ-1A-yRN">
                             <connections>
                                 <segue destination="r0X-bl-ZuL" kind="modal" identifier="filtersSegue" id="TY0-2F-joG"/>
@@ -238,6 +238,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="icon_map" width="43" height="43"/>
+        <image name="icon_map" width="65" height="65"/>
     </resources>
 </document>

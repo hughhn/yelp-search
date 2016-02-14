@@ -11,7 +11,11 @@ import MapKit
 import CoreLocation
 
 @objc internal protocol MapViewControllerDelegate {
-    optional func mapViewController(mapViewController: MapViewController, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!)
+    
+    optional func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, completion: (([Business]!, NSError!) -> Void)!)
+    
+    optional func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!)
+    
     optional func dismissMapViewController(mapViewController: MapViewController)
 }
 
@@ -27,6 +31,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     var rightBarBtn: UIBarButtonItem!
     
     var businesses: [Business]?
+    var annotations = [MKPointAnnotation]()
+    
+    var currLocation: CLLocation?
     var centerLocation: MKPointAnnotation?
     
     override func viewDidLoad() {
@@ -52,27 +59,66 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         locationManager.distanceFilter = 200
         locationManager.requestWhenInUseAuthorization()
         
-        setupAnnotations()
+        loadAnnotations()
     }
     
-    func setupAnnotations() {
+    func loadAnnotations() {
+        if annotations.count > 0 {
+            mapView.removeAnnotations(annotations)
+            annotations.removeAll()
+        }
+        
+        if businesses == nil || businesses!.count == 0 {
+            return
+        }
+        
+        for (business) in businesses! {
+            let geocoder = CLGeocoder()
+            geocoder.geocodeAddressString(business.address!, completionHandler: { (placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+                if let placemark = placemarks?[0] {
+                    let plcmark = MKPlacemark(placemark: placemark)
+                    let annotation = MKPointAnnotation()
+                    annotation.coordinate = plcmark.coordinate
+                    annotation.title = business.name!
+                    self.mapView.addAnnotation(annotation)
+                    self.annotations.append(annotation)
+                }
+            })
+        }
     }
     
-    func addAnnotationAtCoordinate(coordinate: CLLocationCoordinate2D) {
-        let annotation = MKPointAnnotation()
-        annotation.coordinate = coordinate
-        annotation.title = "An annotation!"
-        mapView.addAnnotation(annotation)
-    }
-    
-    func addCenterAnnotation(coordinate: CLLocationCoordinate2D) {
+    func addCenterAnnotation(location: CLLocation) {
+        currLocation = location
         if centerLocation != nil {
             mapView.removeAnnotation(centerLocation!)
         }
         centerLocation = MKPointAnnotation()
-        centerLocation!.coordinate = coordinate
-        centerLocation!.title = "Center"
+        centerLocation!.coordinate = location.coordinate
+        centerLocation!.title = "You're here!"
         mapView.addAnnotation(centerLocation!)
+    }
+    
+    func goToLocation(location: CLLocation) {
+        let span = MKCoordinateSpanMake(0.1, 0.1)
+        let region = MKCoordinateRegionMake(location.coordinate, span)
+        mapView.setRegion(region, animated: false)
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+            locationBtn.hidden = false
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            let span = MKCoordinateSpanMake(0.1, 0.1)
+            let region = MKCoordinateRegionMake(location.coordinate, span)
+            mapView.setRegion(region, animated: true)
+            addCenterAnnotation(location)
+            goToLocation(location)
+        }
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
@@ -93,28 +139,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         }
         
         return annotationView
-    }
-    
-    func goToLocation(location: CLLocation) {
-        let span = MKCoordinateSpanMake(0.1, 0.1)
-        let region = MKCoordinateRegionMake(location.coordinate, span)
-        mapView.setRegion(region, animated: false)
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
-            locationManager.startUpdatingLocation()
-            locationBtn.hidden = false
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            let span = MKCoordinateSpanMake(0.1, 0.1)
-            let region = MKCoordinateRegionMake(location.coordinate, span)
-            mapView.setRegion(region, animated: false)
-            addCenterAnnotation(location.coordinate)
-        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -154,13 +178,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     }
     
     func searchTapped() {
-        delegate?.mapViewController?(self, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+        delegate?.mapViewController?(self, locationUpdated: currLocation, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
             self.businesses = businesses
             
-            for (business) in self.businesses! {
-                print(business.name!)
-                print(business.address!)
-            }
+//            for (business) in self.businesses! {
+//                print(business.name!)
+//                print(business.address!)
+//            }
+            self.loadAnnotations()
         })
         searchBarCancelButtonClicked(searchBar)
     }
