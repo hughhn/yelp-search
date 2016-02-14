@@ -28,13 +28,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     var locationManager : CLLocationManager!
     var searchBar = UISearchBar()
-    var rightBarBtn: UIBarButtonItem!
+    var leftBarBtn: UIBarButtonItem!
     
     var businesses: [Business]?
-    var annotations = [MKPointAnnotation]()
     
     var currLocation: CLLocation?
-    var centerLocation: MKPointAnnotation?
     let span = MKCoordinateSpanMake(0.03, 0.03)
     
     override func viewDidLoad() {
@@ -47,8 +45,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
         searchBar.delegate = self
-        rightBarBtn = UIBarButtonItem(title: "Search", style: .Plain, target: self, action: "searchTapped")
-
+        leftBarBtn = UIBarButtonItem(title: "Filters", style: .Plain, target: self, action: "searchTapped")
+        navigationItem.leftBarButtonItem = leftBarBtn
+        
         // set the region to display, this also sets a correct zoom level
         // set starting center location in San Francisco
         //let centerLocation = CLLocation(latitude: 37.7833, longitude: -122.4167)
@@ -66,11 +65,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     }
     
     func loadAnnotations() {
-//        if annotations.count > 0 {
-//            mapView.removeAnnotations(annotations)
-//            annotations.removeAll()
-//        }
-        
         if businesses == nil || businesses!.count == 0 {
             return
         }
@@ -83,7 +77,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
                     let annotation = YelpAnnotation(coordinate: plcmark.coordinate, business: business)
                     annotation.title = business.name!
                     self.mapView.addAnnotation(annotation)
-//                    self.annotations.append(annotation)
                 }
             })
         }
@@ -194,12 +187,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
-        navigationItem.rightBarButtonItem = rightBarBtn
+        leftBarBtn.title = "Search"
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
-        navigationItem.rightBarButtonItem = nil
+        leftBarBtn.title = "Filters"
         searchBar.text = ""
         searchBar.resignFirstResponder()
     }
@@ -212,6 +205,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
 //                print(business.name!)
 //                print(business.address!)
 //            }
+            self.mapView.removeAnnotations(self.mapView.annotations)
             self.loadAnnotations()
         })
         searchBarCancelButtonClicked(searchBar)
