@@ -41,6 +41,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         
         // Do any additional setup after loading the view.
         
+        mapView.delegate = self
+        
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
         searchBar.delegate = self
@@ -77,8 +79,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
             geocoder.geocodeAddressString(business.address!, completionHandler: { (placemarks: [CLPlacemark]?, error: NSError?) -> Void in
                 if let placemark = placemarks?[0] {
                     let plcmark = MKPlacemark(placemark: placemark)
-                    let annotation = MKPointAnnotation()
-                    annotation.coordinate = plcmark.coordinate
+                    let annotation = YelpAnnotation(coordinate: plcmark.coordinate, business: business)
                     annotation.title = business.name!
                     self.mapView.addAnnotation(annotation)
                     self.annotations.append(annotation)
@@ -109,6 +110,40 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         }
     }
     
+    func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
+        print("calloutAccessoryControlTapped")
+        print(control.tag)
+        if !(view.annotation is YelpAnnotation) {
+            return
+        }
+        let yelpAnnotation = view.annotation as! YelpAnnotation
+        print(yelpAnnotation.business?.name!)
+    }
+    
+    func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {
+        if !(view.annotation is YelpAnnotation) {
+            return
+        }
+        let yelpAnnotation = view.annotation as! YelpAnnotation
+        
+        let leftBtn = UIButton(frame: CGRectMake(0, 0, 50, 50))
+        leftBtn.setImageForState(UIControlState.Normal, withURL: (yelpAnnotation.business?.imageURL)!)
+        leftBtn.layer.masksToBounds = true
+        leftBtn.layer.cornerRadius = 5
+        
+//        let leftImg = UIImageView(frame: CGRectMake(0, 0, 50, 50))
+//        leftImg.setImageWithURL((yelpAnnotation.business?.imageURL)!)
+//        leftImg.layer.masksToBounds = true
+//        leftImg.layer.cornerRadius = 5
+        view.leftCalloutAccessoryView = leftBtn
+        
+        let rightImg = UIImageView(frame: CGRectMake(0, 0, 83, 15))
+        rightImg.setImageWithURL((yelpAnnotation.business?.ratingImageURL)!)
+        rightImg.layer.masksToBounds = true
+        rightImg.layer.cornerRadius = 5
+        view.rightCalloutAccessoryView = rightImg
+    }
+    
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
         if annotation is MKUserLocation {
             return nil
@@ -120,15 +155,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         var annotationView = mapView.dequeueReusableAnnotationViewWithIdentifier(identifier) as? MKPinAnnotationView
         if (annotationView == nil) {
             annotationView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: identifier)
-        }
-        else {
+        } else {
             annotationView!.annotation = annotation
         }
-        if #available(iOS 9.0, *) {
-            annotationView!.pinTintColor = UIColor.greenColor()
-        } else {
-            // Fallback on earlier versions
-        }
+        
+//        if #available(iOS 9.0, *) {
+//            annotationView!.pinTintColor = UIColor.greenColor()
+//        } else {
+//            // Fallback on earlier versions
+//            annotationView?.pinColor = .Green
+//        }
+//        annotationView!.pinColor = .Green
+        annotationView!.canShowCallout = true
         
         return annotationView
     }
