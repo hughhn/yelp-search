@@ -116,12 +116,16 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
             let span = MKCoordinateSpanMake(0.05, 0.05)
             let region = MKCoordinateRegionMake(location.coordinate, span)
             mapView.setRegion(region, animated: true)
-            addCenterAnnotation(location)
+            //addCenterAnnotation(location)
             goToLocation(location)
         }
     }
     
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
+        if annotation is MKUserLocation {
+            return nil
+        }
+        
         let identifier = "customAnnotationView"
         
         // custom pin annotation
