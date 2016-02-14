@@ -87,17 +87,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         }
     }
     
-    func addCenterAnnotation(location: CLLocation) {
-        currLocation = location
-        if centerLocation != nil {
-            mapView.removeAnnotation(centerLocation!)
-        }
-        centerLocation = MKPointAnnotation()
-        centerLocation!.coordinate = location.coordinate
-        centerLocation!.title = "You're here!"
-        mapView.addAnnotation(centerLocation!)
-    }
-    
     func goToLocation(location: CLLocation) {
         let span = MKCoordinateSpanMake(0.05, 0.05)
         let region = MKCoordinateRegionMake(location.coordinate, span)
@@ -116,7 +105,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
             let span = MKCoordinateSpanMake(0.05, 0.05)
             let region = MKCoordinateRegionMake(location.coordinate, span)
             mapView.setRegion(region, animated: true)
-            //addCenterAnnotation(location)
             goToLocation(location)
         }
     }
