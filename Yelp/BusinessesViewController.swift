@@ -51,7 +51,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         insets.bottom += InfiniteScrollActivityView.defaultHeight;
         tableView.contentInset = insets
 
-        doSearch(nil)
+        doSearch(nil, searchCompletion: nil)
     }
     
     override func viewDidLayoutSubviews() {
@@ -62,16 +62,25 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     @IBAction func mapBtnClicked(sender: AnyObject) {
         let mapVC = MapViewController()
         mapVC.delegate = self
-        navigationController?.presentViewController(mapVC, animated: true, completion: nil)
+        mapVC.businesses = self.businesses
         
-        //navigationController?.pushViewController(mapVC, animated: true)
+        //navigationController?.presentViewController(mapVC, animated: true, completion: nil)
+        navigationController?.pushViewController(mapVC, animated: true)
     }
     
     func dismissMapViewController(mapViewController: MapViewController) {
         dismissViewControllerAnimated(true, completion: nil)
     }
     
-    func doSearch(offset: Int?) {
+    
+    func mapViewController(mapViewController: MapViewController, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!) {
+        currSearchTerm = searchTerm
+        doSearch(nil, searchCompletion: { (businesses: [Business]!, error: NSError!) -> Void in
+            completion(businesses, error)
+        })
+    }
+    
+    func doSearch(offset: Int?, searchCompletion: (([Business]!, NSError!) -> Void)?) {
         if offset == nil {
             businesses.removeAll()
             tableView.setContentOffset(CGPoint.zero, animated: true)
@@ -90,6 +99,10 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
                 
                 self.businesses.appendContentsOf(businesses)
                 self.tableView.reloadData()
+                
+                if searchCompletion != nil {
+                    searchCompletion!(businesses, error)
+                }
         })
     }
     
@@ -128,7 +141,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     func filtersViewController(filtersViewController: FiltersViewController, didUpdatePrefs newPrefs: Preferences) {
         currPrefs = newPrefs
-        doSearch(nil)
+        doSearch(nil, searchCompletion: nil)
     }
     
     func scrollViewDidScroll(scrollView: UIScrollView) {
@@ -149,7 +162,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
             loadingMoreView?.frame = frame
             loadingMoreView!.startAnimating()
             
-            doSearch(businesses.count)
+            doSearch(businesses.count, searchCompletion: nil)
         }
     }
     
@@ -171,7 +184,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         if identifier == "filtersSegue" && actionBtn.title == "Search" {
             currSearchTerm = searchBar.text!
             searchBarCancelButtonClicked(searchBar)
-            doSearch(nil)
+            doSearch(nil, searchCompletion: nil)
             return false
         }
         

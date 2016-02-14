@@ -11,11 +11,11 @@ import MapKit
 import CoreLocation
 
 @objc internal protocol MapViewControllerDelegate {
-    
+    optional func mapViewController(mapViewController: MapViewController, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!)
     optional func dismissMapViewController(mapViewController: MapViewController)
 }
 
-class MapViewController: UIViewController, CLLocationManagerDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate {
 
     weak var delegate: MapViewControllerDelegate?
     @IBOutlet weak var mapView: MKMapView!
@@ -23,12 +23,21 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
     @IBOutlet weak var locationBtn: UIButton!
     
     var locationManager : CLLocationManager!
+    var searchBar = UISearchBar()
+    var rightBarBtn: UIBarButtonItem!
+    
+    var businesses: [Business]?
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
         
+        searchBar.sizeToFit()
+        navigationItem.titleView = searchBar
+        searchBar.delegate = self
+        rightBarBtn = UIBarButtonItem(title: "Search", style: .Plain, target: self, action: "searchTapped")
+
         // set the region to display, this also sets a correct zoom level
         // set starting center location in San Francisco
         let centerLocation = CLLocation(latitude: 37.7833, longitude: -122.4167)
@@ -88,6 +97,29 @@ class MapViewController: UIViewController, CLLocationManagerDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = true
+        navigationItem.rightBarButtonItem = rightBarBtn
+    }
+    
+    func searchBarCancelButtonClicked(searchBar: UISearchBar) {
+        searchBar.showsCancelButton = false
+        navigationItem.rightBarButtonItem = nil
+        searchBar.text = ""
+        searchBar.resignFirstResponder()
+    }
+    
+    func searchTapped() {
+        delegate?.mapViewController?(self, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+            self.businesses = businesses
+            
+            for (business) in self.businesses! {
+                print(business.name!)
+                print(business.address!)
+            }
+        })
+        searchBarCancelButtonClicked(searchBar)
+    }
 
     /*
     // MARK: - Navigation
