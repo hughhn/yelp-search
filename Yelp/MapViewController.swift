@@ -111,8 +111,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     }
     
     func mapView(mapView: MKMapView, annotationView view: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
-        print("calloutAccessoryControlTapped")
-        print(control.tag)
         if !(view.annotation is YelpAnnotation) {
             return
         }
