@@ -48,8 +48,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
 
         // set the region to display, this also sets a correct zoom level
         // set starting center location in San Francisco
-        let centerLocation = CLLocation(latitude: 37.7833, longitude: -122.4167)
-        goToLocation(centerLocation)
+        //let centerLocation = CLLocation(latitude: 37.7833, longitude: -122.4167)
+        //goToLocation(centerLocation)
         
         locationBtn.hidden = true
         
@@ -99,7 +99,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     }
     
     func goToLocation(location: CLLocation) {
-        let span = MKCoordinateSpanMake(0.1, 0.1)
+        let span = MKCoordinateSpanMake(0.05, 0.05)
         let region = MKCoordinateRegionMake(location.coordinate, span)
         mapView.setRegion(region, animated: false)
     }
@@ -113,7 +113,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            let span = MKCoordinateSpanMake(0.1, 0.1)
+            let span = MKCoordinateSpanMake(0.05, 0.05)
             let region = MKCoordinateRegionMake(location.coordinate, span)
             mapView.setRegion(region, animated: true)
             addCenterAnnotation(location)

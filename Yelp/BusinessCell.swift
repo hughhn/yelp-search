@@ -40,6 +40,9 @@ class BusinessCell: UITableViewCell {
         thumbnailView.clipsToBounds = true
         
         nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
+        
+        self.layoutMargins = UIEdgeInsetsZero
+        self.preservesSuperviewLayoutMargins = false
     }
     
     override func layoutSubviews() {

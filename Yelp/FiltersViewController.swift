@@ -74,6 +74,10 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         return tableStructure.count
     }
     
+    func tableView(tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+        return 30
+    }
+    
     func tableView(tableView: UITableView, titleForHeaderInSection section: Int) -> String? {
         return tableStructure[section].header
     }

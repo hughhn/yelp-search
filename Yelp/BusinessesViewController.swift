@@ -31,6 +31,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
         tableView.estimatedRowHeight = 81
+        tableView.separatorInset = UIEdgeInsetsZero
+        tableView.hidden = true
         
         // create the search bar programatically since you won't be
         // able to drag one onto the navigation bar
@@ -110,6 +112,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
                 
                 self.businesses.appendContentsOf(businesses)
                 self.tableView.reloadData()
+                self.tableView.hidden = false
                 
                 if searchCompletion != nil {
                     searchCompletion!(businesses, error)
