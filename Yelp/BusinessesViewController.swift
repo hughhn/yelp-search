@@ -69,7 +69,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     }
     
     func dismissMapViewController(mapViewController: MapViewController) {
-        dismissViewControllerAnimated(true, completion: nil)
+        navigationController?.popViewControllerAnimated(true)
     }
     
     
