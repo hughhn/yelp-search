@@ -19,7 +19,9 @@ class BusinessViewController: UIViewController {
     @IBOutlet weak var categoriesLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
     
+    @IBOutlet weak var businessImageView: UIImageView!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var snippetLabel: UILabel!
     
     var business: Business!
     var coordinate: CLLocationCoordinate2D!
@@ -33,16 +35,26 @@ class BusinessViewController: UIViewController {
         super.viewDidLoad()
         
         navigationController?.navigationBar.translucent = false;
-
+        
         // Do any additional setup after loading the view.
         nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
         
         nameLabel.text = business.name
         distanceLabel.text = business.distance
         ratingsCountLabel.text = "\(business.reviewCount!) Reviews"
-        addressLabel.text = business.address
+        addressLabel.text = business.displayAddress
         categoriesLabel.text = business.categories
         ratingImageView.setImageWithURL(business.ratingImageURL!)
+        
+        businessImageView.setImageWithURL(business.imageURL!)
+        businessImageView.layer.cornerRadius = 5
+        
+        let locale = NSLocale.currentLocale()
+        let qBegin = locale.objectForKey(NSLocaleQuotationBeginDelimiterKey) as? String ?? "\""
+        let qEnd = locale.objectForKey(NSLocaleQuotationEndDelimiterKey) as? String ?? "\""
+        let snippet = qBegin + business.snippet! + qEnd
+        
+        snippetLabel.text = snippet
         
         let annotation = MKPointAnnotation()
         annotation.coordinate = business.coordinate!

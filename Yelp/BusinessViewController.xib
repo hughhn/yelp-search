@@ -8,12 +8,14 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BusinessViewController" customModule="Yelp" customModuleProvider="target">
             <connections>
                 <outlet property="addressLabel" destination="MbJ-jl-oxn" id="h2L-a0-kRD"/>
+                <outlet property="businessImageView" destination="KYM-Mq-dha" id="Izp-44-cq9"/>
                 <outlet property="categoriesLabel" destination="Gj6-Q9-lEh" id="8NB-WI-Rdj"/>
                 <outlet property="distanceLabel" destination="hC8-Wd-kwc" id="9lG-Zj-VOm"/>
                 <outlet property="mapView" destination="0MQ-0N-Ba8" id="wVQ-uo-Xb7"/>
                 <outlet property="nameLabel" destination="urN-po-nGc" id="aJG-Ps-6BA"/>
                 <outlet property="ratingImageView" destination="ySG-8s-ovv" id="D7L-9q-Sex"/>
                 <outlet property="ratingsCountLabel" destination="ZAj-Ng-BGI" id="ZFh-XZ-stQ"/>
+                <outlet property="snippetLabel" destination="fvN-3p-0cA" id="2f8-Je-gbL"/>
                 <outlet property="view" destination="i5M-Pr-FkT" id="sfx-zR-JGt"/>
             </connections>
         </placeholder>
@@ -78,24 +80,55 @@
                         <constraint firstAttribute="height" constant="8" id="qIX-Wy-PEY"/>
                     </constraints>
                 </view>
+                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="KYM-Mq-dha">
+                    <rect key="frame" x="8" y="243" width="100" height="100"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="100" id="GYH-5a-d8a"/>
+                        <constraint firstAttribute="width" constant="100" id="x4t-Bm-zOY"/>
+                    </constraints>
+                </imageView>
+                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="RDi-mJ-t7N">
+                    <rect key="frame" x="0.0" y="351" width="320" height="8.5"/>
+                    <color key="backgroundColor" red="0.90208333330000001" green="0.90208333330000001" blue="0.90208333330000001" alpha="1" colorSpace="calibratedRGB"/>
+                    <constraints>
+                        <constraint firstAttribute="height" constant="8" id="sR3-fn-SL2"/>
+                    </constraints>
+                </view>
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="fvN-3p-0cA">
+                    <rect key="frame" x="8" y="367" width="288" height="107.5"/>
+                    <string key="text">Seamless experience, and the food was beyond advertised. Really no need for the long story. All the previous reviews came in accurate and had an amazing...</string>
+                    <fontDescription key="fontDescription" type="italicSystem" pointSize="18"/>
+                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                    <nil key="highlightedColor"/>
+                </label>
             </subviews>
-            <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+            <color key="backgroundColor" red="0.99102564102564106" green="0.99102564102564106" blue="0.99102564102564106" alpha="1" colorSpace="calibratedRGB"/>
+            <color key="tintColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="0MQ-0N-Ba8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="0Tr-ks-0Pm"/>
                 <constraint firstAttribute="trailing" secondItem="hC8-Wd-kwc" secondAttribute="trailing" constant="8" id="1kz-9h-1eS"/>
                 <constraint firstItem="hC8-Wd-kwc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="urN-po-nGc" secondAttribute="trailing" constant="10" id="79k-kb-Hmm"/>
+                <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="fvN-3p-0cA" secondAttribute="trailing" constant="8" id="7rg-IJ-TZq"/>
                 <constraint firstItem="MbJ-jl-oxn" firstAttribute="top" secondItem="0MQ-0N-Ba8" secondAttribute="bottom" constant="8" id="8kX-n2-fKQ"/>
+                <constraint firstItem="RDi-mJ-t7N" firstAttribute="top" secondItem="KYM-Mq-dha" secondAttribute="bottom" constant="8" id="8xF-Ik-RR5"/>
                 <constraint firstItem="qht-0J-PmK" firstAttribute="top" secondItem="MbJ-jl-oxn" secondAttribute="bottom" constant="8" id="CE1-fo-RSv"/>
                 <constraint firstItem="urN-po-nGc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Cpu-8L-pb3"/>
+                <constraint firstItem="KYM-Mq-dha" firstAttribute="top" secondItem="qht-0J-PmK" secondAttribute="bottom" constant="8" id="FWo-3b-6Zs"/>
                 <constraint firstItem="urN-po-nGc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="GgD-3Z-Kla"/>
                 <constraint firstAttribute="trailing" secondItem="0MQ-0N-Ba8" secondAttribute="trailing" id="IDi-P4-6a5"/>
                 <constraint firstItem="MbJ-jl-oxn" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="LZM-UA-LeL"/>
+                <constraint firstItem="RDi-mJ-t7N" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="MJj-mj-v8q"/>
                 <constraint firstItem="ZAj-Ng-BGI" firstAttribute="leading" secondItem="ySG-8s-ovv" secondAttribute="trailing" constant="8" id="NKU-tg-xWE"/>
+                <constraint firstItem="fvN-3p-0cA" firstAttribute="top" secondItem="RDi-mJ-t7N" secondAttribute="bottom" constant="8" id="P25-ST-JFF"/>
                 <constraint firstItem="Gj6-Q9-lEh" firstAttribute="top" secondItem="ySG-8s-ovv" secondAttribute="bottom" constant="8" id="PkY-If-AfG"/>
                 <constraint firstItem="SqN-hB-dkD" firstAttribute="top" secondItem="hC8-Wd-kwc" secondAttribute="bottom" constant="7" id="R3a-5L-tI4"/>
                 <constraint firstItem="ySG-8s-ovv" firstAttribute="top" secondItem="urN-po-nGc" secondAttribute="bottom" constant="8" id="S3z-IU-E8s"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MbJ-jl-oxn" secondAttribute="trailing" constant="8" id="VYN-rh-w9I"/>
+                <constraint firstItem="fvN-3p-0cA" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Wvm-BA-d7l"/>
+                <constraint firstItem="KYM-Mq-dha" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="aN6-WB-VtH"/>
                 <constraint firstAttribute="trailing" secondItem="SqN-hB-dkD" secondAttribute="trailing" constant="8" id="bzk-1a-7dm"/>
+                <constraint firstAttribute="trailing" secondItem="RDi-mJ-t7N" secondAttribute="trailing" id="enZ-4S-dXN"/>
+                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="fvN-3p-0cA" secondAttribute="bottom" constant="8" id="fGb-Df-JwI"/>
                 <constraint firstAttribute="trailing" secondItem="qht-0J-PmK" secondAttribute="trailing" id="kfz-JV-1ME"/>
                 <constraint firstItem="0MQ-0N-Ba8" firstAttribute="top" secondItem="Gj6-Q9-lEh" secondAttribute="bottom" constant="7.5" id="oZr-Ka-Agl"/>
                 <constraint firstItem="qht-0J-PmK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qWk-Bo-ITd"/>
