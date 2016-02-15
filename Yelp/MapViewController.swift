@@ -114,9 +114,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         }
     }
     
-    func goToLocation(location: CLLocation) {
+    func goToLocation(location: CLLocation, animated: Bool) {
         let region = MKCoordinateRegionMake(location.coordinate, span)
-        mapView.setRegion(region, animated: true)
+        mapView.setRegion(region, animated: animated)
     }
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
@@ -131,7 +131,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
             let region = MKCoordinateRegionMake(location.coordinate, span)
             mapView.setRegion(region, animated: true)
             currLocation = location
-            goToLocation(location)
+            goToLocation(location, animated: false)
             
             // Search after location is determined
             delegate?.mapViewController?(self, locationUpdated: currLocation, newPrefs: nil, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
@@ -159,7 +159,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         }
         let yelpAnnotation = view.annotation as! YelpAnnotation
         
-        goToLocation(CLLocation(latitude: (yelpAnnotation.business!.coordinate?.latitude)!, longitude: (yelpAnnotation.business!.coordinate?.longitude)!))
+        goToLocation(CLLocation(latitude: (yelpAnnotation.business!.coordinate?.latitude)!, longitude: (yelpAnnotation.business!.coordinate?.longitude)!), animated: true)
         
         let leftBtn = UIButton(frame: CGRectMake(0, 0, 50, 50))
         leftBtn.setImageForState(UIControlState.Normal, withURL: (yelpAnnotation.business?.imageURL)!)
