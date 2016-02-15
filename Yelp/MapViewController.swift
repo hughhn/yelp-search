@@ -32,7 +32,14 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     var searchBar = UISearchBar()
     var leftBarBtn: UIBarButtonItem!
     
-    var businesses: [Business]?
+    var businesses: [Business]? {
+        didSet {
+            if self.mapView == nil {
+                return
+            }
+            self.loadAnnotations()
+        }
+    }
     
     var currLocation: CLLocation?
     let span = MKCoordinateSpanMake(0.03, 0.03)
@@ -74,6 +81,9 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         for (business) in businesses! {
             let geocoder = CLGeocoder()
             geocoder.geocodeAddressString(business.address!, completionHandler: { (placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+                if error != nil {
+                    print(error!)
+                }
                 if let placemark = placemarks?[0] {
                     let plcmark = MKPlacemark(placemark: placemark)
                     let annotation = YelpAnnotation(coordinate: plcmark.coordinate, business: business)
@@ -202,14 +212,13 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     func actionBtnTapped() {
         if leftBarBtn.title == "Search" {
             delegate?.mapViewController?(self, locationUpdated: currLocation, newPrefs: nil, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+                self.mapView.removeAnnotations(self.mapView.annotations)
                 self.businesses = businesses
                 
                 //            for (business) in self.businesses! {
                 //                print(business.name!)
                 //                print(business.address!)
                 //            }
-                self.mapView.removeAnnotations(self.mapView.annotations)
-                self.loadAnnotations()
             })
             searchBarCancelButtonClicked(searchBar)
         } else {
@@ -226,9 +235,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     func filtersViewController(filtersViewController: FiltersViewController, didUpdatePrefs newPrefs: Preferences) {
         delegate?.mapViewController?(self, locationUpdated: currLocation, newPrefs: newPrefs, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
             self.mapView.removeAnnotations(self.mapView.annotations)
-            self.loadAnnotations()
+            self.businesses = businesses
         })
     }
 
