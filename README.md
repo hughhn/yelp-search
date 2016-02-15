@@ -44,6 +44,10 @@ Please list two areas of the assignment you'd like to **discuss further with you
 
 Here's a walkthrough of implemented user stories:
 
+![Video Walkthrough](yelp2.gif)
+
+![Video Walkthrough](yelp.gif)
+
 http://i.imgur.com/lX8WA7O.gifv
 
 GIF created with [LiceCap](http://www.cockos.com/licecap/).
