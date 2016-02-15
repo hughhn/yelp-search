@@ -35,15 +35,29 @@ enum YelpSortMode: Int {
     }
 }
 
-enum YelpDistance: Float {
+enum YelpDistance: Int {
     case DistanceAuto = 0
-    case Distance03 = 0.3
-    case Distance1 = 1
-    case Distance5 = 5
-    case Distance20 = 20
+    case Distance03
+    case Distance1
+    case Distance5
+    case Distance20
     
     static let allValues = [DistanceAuto, Distance03, Distance1, Distance5, Distance20]
     
+    func getValue() -> Double {
+        switch self {
+        case .DistanceAuto:
+            return 0
+        case .Distance03:
+            return 0.3
+        case .Distance1:
+            return 1
+        case .Distance5:
+            return 5
+        case .Distance20:
+            return 20
+        }
+    }
     func toDisplayString() -> String {
         switch self {
         case .DistanceAuto:
@@ -111,7 +125,7 @@ class YelpClient: BDBOAuth1RequestOperationManager {
         }
         
         if distance != nil && distance! != .DistanceAuto {
-            parameters["radius_filter"] = round(distance!.rawValue * 1609.34)
+            parameters["radius_filter"] = round(distance!.getValue() * 1609.34)
         }
         
         if categories != nil && categories!.count > 0 {

@@ -91,17 +91,35 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         if tableStructure[indexPath.section].expandable {
             if tableStructure[indexPath.section].expanded {
+                var oldCell: DropdownCell!
                 if tableStructure[indexPath.section].sectionType == "Distance" {
+                    let row = (prefs.distance!).rawValue
+                    oldCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: indexPath.section)) as! DropdownCell
                     prefs.distance = YelpDistance.allValues[indexPath.row]
                 } else if tableStructure[indexPath.section].sectionType == "Sort" {
+                    let row = (prefs.sortMode!).rawValue
+                    oldCell = tableView.cellForRowAtIndexPath(NSIndexPath(forRow: row, inSection: indexPath.section)) as! DropdownCell
                     prefs.sortMode = YelpSortMode.allValues[indexPath.row]
                 }
+                oldCell.dropdownImg.image = UIImage(named: "icon_empty_circle")
+                
+                let cell = tableView.cellForRowAtIndexPath(indexPath) as! DropdownCell
+                let dropdownImg = UIImage(named: "icon_checked_circle")
+                cell.dropdownImg.image = dropdownImg!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                cell.dropdownImg.tintColor = UIColor.redColor()
+                
+                UIView.animateWithDuration(2.0, animations: {}, completion: { finished in
+                    self.tableStructure[indexPath.section].expanded = !self.tableStructure[indexPath.section].expanded
+                    
+                    // reload this section
+                    tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
+                })
+            } else {
+                tableStructure[indexPath.section].expanded = !tableStructure[indexPath.section].expanded
+                
+                // reload this section
+                tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
             }
-            
-            tableStructure[indexPath.section].expanded = !tableStructure[indexPath.section].expanded
-            
-            // reload this section
-            tableView.reloadSections(NSIndexSet(index: indexPath.section), withRowAnimation: UITableViewRowAnimation.Fade)
         }
         
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -132,7 +150,9 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 let dropdownValue = YelpDistance.allValues[indexPath.row]
                 cell.dropdownLabel.text = dropdownValue.toDisplayString()
                 if dropdownValue == prefs.distance {
-                    cell.dropdownImg.image = UIImage(named: "icon_checked_circle")
+                    let dropdownImg = UIImage(named: "icon_checked_circle")
+                    cell.dropdownImg.image = dropdownImg!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                    cell.dropdownImg.tintColor = UIColor.redColor()
                 } else {
                     cell.dropdownImg.image = UIImage(named: "icon_empty_circle")
                 }
@@ -149,7 +169,9 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 let dropdownValue = YelpSortMode.allValues[indexPath.row]
                 cell.dropdownLabel.text = dropdownValue.toDisplayString()
                 if dropdownValue == prefs.sortMode {
-                    cell.dropdownImg.image = UIImage(named: "icon_checked_circle")
+                    let dropdownImg = UIImage(named: "icon_checked_circle")
+                    cell.dropdownImg.image = dropdownImg!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
+                    cell.dropdownImg.tintColor = UIColor.redColor()
                 } else {
                     cell.dropdownImg.image = UIImage(named: "icon_empty_circle")
                 }
