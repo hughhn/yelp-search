@@ -10,7 +10,7 @@ import UIKit
 import MapKit
 import CoreLocation
 
-class BusinessViewController: UIViewController {
+class BusinessViewController: UIViewController, CLLocationManagerDelegate {
 
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var distanceLabel: UILabel!
@@ -25,6 +25,7 @@ class BusinessViewController: UIViewController {
     
     var business: Business!
     var coordinate: CLLocationCoordinate2D!
+    var locationManager: CLLocationManager!
     
     override func viewDidLayoutSubviews() {
         nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
@@ -59,15 +60,28 @@ class BusinessViewController: UIViewController {
         let annotation = MKPointAnnotation()
         annotation.coordinate = business.coordinate!
         mapView.addAnnotation(annotation)
+        mapView.showsUserLocation = true
+        
+        locationManager = CLLocationManager()
+        locationManager.delegate = self
+        locationManager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+        locationManager.distanceFilter = 200
+        locationManager.requestWhenInUseAuthorization()
         
         goToLocation(business.coordinate!)
     }
     
     func goToLocation(location: CLLocationCoordinate2D) {
-        let region = MKCoordinateRegionMakeWithDistance(location, 1000, 1000)
+        let region = MKCoordinateRegionMakeWithDistance(location, 1500, 1500)
         mapView.setRegion(region, animated: false)
     }
-
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        if status == CLAuthorizationStatus.AuthorizedWhenInUse {
+            locationManager.startUpdatingLocation()
+        }
+    }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
