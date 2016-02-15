@@ -23,11 +23,13 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var mapBtn: UIButton!
     
-    var actionBtn: UIBarButtonItem!
+    var actionBtn: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        navigationController?.navigationBar.translucent = false;
+
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -35,8 +37,17 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.separatorInset = UIEdgeInsetsZero
         tableView.hidden = true
         
-        actionBtn = UIBarButtonItem(title: "Filters", style: .Plain, target: self, action: "actionBtnTapped")
-        navigationItem.leftBarButtonItem = actionBtn
+        actionBtn = UIButton(type: .System)
+        actionBtn.frame = CGRectMake(0, 0, 60, 30);
+        actionBtn.layer.borderColor = UIColor.blackColor().CGColor
+        actionBtn.layer.borderWidth = 0.2
+        actionBtn.layer.cornerRadius = 5
+        actionBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        actionBtn.setTitle("Filters", forState: UIControlState.Normal)
+        actionBtn.addTarget(self, action: "actionBtnTapped", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let leftBarBtn = UIBarButtonItem(customView: actionBtn)
+        navigationItem.leftBarButtonItem = leftBarBtn
         
         // create the search bar programatically since you won't be
         // able to drag one onto the navigation bar
@@ -144,12 +155,12 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
-        actionBtn.title = "Search"
+        actionBtn.setTitle("Search", forState: UIControlState.Normal)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
-        actionBtn.title = "Filters"
+        actionBtn.setTitle("Filters", forState: UIControlState.Normal)
         searchBar.text = ""
         searchBar.resignFirstResponder()
     }
@@ -211,7 +222,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     // MARK: - Navigation
 
     func actionBtnTapped() {
-        if actionBtn.title == "Search" {
+        print(actionBtn.currentTitle)
+        if actionBtn.currentTitle == "Search" {
             currSearchTerm = searchBar.text!
             searchBarCancelButtonClicked(searchBar)
             doSearch(nil, searchCompletion: nil)
