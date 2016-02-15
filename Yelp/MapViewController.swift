@@ -79,18 +79,22 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         }
         
         for (business) in businesses! {
-            let geocoder = CLGeocoder()
-            geocoder.geocodeAddressString(business.address!, completionHandler: { (placemarks: [CLPlacemark]?, error: NSError?) -> Void in
-                if error != nil {
-                    print(error!)
-                }
-                if let placemark = placemarks?[0] {
-                    let plcmark = MKPlacemark(placemark: placemark)
-                    let annotation = YelpAnnotation(coordinate: plcmark.coordinate, business: business)
-                    annotation.title = business.name!
-                    self.mapView.addAnnotation(annotation)
-                }
-            })
+            let annotation = YelpAnnotation(coordinate: business.coordinate!, business: business)
+            annotation.title = business.name!
+            self.mapView.addAnnotation(annotation)
+            
+//            let geocoder = CLGeocoder()
+//            geocoder.geocodeAddressString(business.address!, completionHandler: { (placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+//                if error != nil {
+//                    print(error!)
+//                }
+//                if let placemark = placemarks?[0] {
+//                    let plcmark = MKPlacemark(placemark: placemark)
+//                    let annotation = YelpAnnotation(coordinate: plcmark.coordinate, business: business)
+//                    annotation.title = business.name!
+//                    self.mapView.addAnnotation(annotation)
+//                }
+//            })
         }
     }
     

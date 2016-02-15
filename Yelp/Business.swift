@@ -12,11 +12,14 @@ import CoreLocation
 class Business: NSObject {
     let name: String?
     let address: String?
+    let displayAddress: String?
     let imageURL: NSURL?
     let categories: String?
     let distance: String?
     let ratingImageURL: NSURL?
     let reviewCount: NSNumber?
+    let coordinate: CLLocationCoordinate2D?
+    let snippet: String?
     
     init(dictionary: NSDictionary) {
         name = dictionary["name"] as? String
@@ -30,10 +33,24 @@ class Business: NSObject {
         
         let location = dictionary["location"] as? NSDictionary
         var address = ""
+        var displayAddress = ""
+        var coordinate: CLLocationCoordinate2D? = nil
+        
         if location != nil {
             let addressArray = location!["address"] as? NSArray
             if addressArray != nil && addressArray!.count > 0 {
                 address = addressArray![0] as! String
+            }
+            
+            let displayAddressArray = location!["display_address"] as? NSArray
+            if displayAddressArray != nil && displayAddressArray!.count > 0 {
+                displayAddress = displayAddressArray![0] as! String
+            }
+            
+            if let coordinateDic = location!["coordinate"] as? NSDictionary {
+                let lat = coordinateDic["latitude"]
+                let long = coordinateDic["longitude"]
+                coordinate = CLLocationCoordinate2D(latitude: lat as! CLLocationDegrees, longitude: long as! CLLocationDegrees)
             }
             
             let neighborhoods = location!["neighborhoods"] as? NSArray
@@ -45,6 +62,14 @@ class Business: NSObject {
             }
         }
         self.address = address
+        self.displayAddress = displayAddress
+        self.coordinate = coordinate
+        
+        var snippet = ""
+        if let snippetString = dictionary["snippet_text"] as? String {
+            snippet = snippetString
+        }
+        self.snippet = snippet
         
         let categoriesArray = dictionary["categories"] as? [[String]]
         if categoriesArray != nil {
