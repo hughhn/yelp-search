@@ -132,6 +132,12 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
             mapView.setRegion(region, animated: true)
             currLocation = location
             goToLocation(location)
+            
+            // Search after location is determined
+            delegate?.mapViewController?(self, locationUpdated: currLocation, newPrefs: nil, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                self.businesses = businesses
+            })
         }
     }
     

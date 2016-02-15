@@ -13,7 +13,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
 
     var businesses = [Business]()
     var searchBar = UISearchBar()
-    var currSearchTerm: String?
+    var currSearchTerm: String! = "Restaurants"
     var currPrefs = Preferences()
     var currLocation: CLLocation?
     
@@ -75,7 +75,9 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         insets.bottom += InfiniteScrollActivityView.defaultHeight;
         tableView.contentInset = insets
 
-        doSearch(nil, searchCompletion: nil)
+        //doSearch(nil, searchCompletion: nil)
+        // redirect to map
+        mapBtnClicked(self)
     }
     
     override func viewDidLayoutSubviews() {
@@ -140,9 +142,6 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
             businesses.removeAll()
             tableView.setContentOffset(CGPoint.zero, animated: true)
             tableView.reloadData()
-        }
-        if currSearchTerm == nil {
-            currSearchTerm = "Restaurants"
         }
         searchBar.placeholder = currSearchTerm!
         Business.searchWithTerm(currSearchTerm!, sort: currPrefs.sortMode, distance: currPrefs.distance, categories: currPrefs.categories, deals: currPrefs.deal, offset: offset, location: currLocation,

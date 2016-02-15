@@ -49,6 +49,7 @@ class BusinessViewController: UIViewController, CLLocationManagerDelegate {
         
         businessImageView.setImageWithURL(business.imageURL!)
         businessImageView.layer.cornerRadius = 5
+        businessImageView.clipsToBounds = true
         
         let locale = NSLocale.currentLocale()
         let qBegin = locale.objectForKey(NSLocaleQuotationBeginDelimiterKey) as? String ?? "\""
