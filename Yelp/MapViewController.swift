@@ -157,10 +157,6 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         leftBtn.layer.masksToBounds = true
         leftBtn.layer.cornerRadius = 5
         
-//        let leftImg = UIImageView(frame: CGRectMake(0, 0, 50, 50))
-//        leftImg.setImageWithURL((yelpAnnotation.business?.imageURL)!)
-//        leftImg.layer.masksToBounds = true
-//        leftImg.layer.cornerRadius = 5
         view.leftCalloutAccessoryView = leftBtn
         
         let rightBtn = UIButton(frame: CGRectMake(0, 0, 83, 15))
