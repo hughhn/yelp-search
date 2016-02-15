@@ -37,7 +37,7 @@
                     <nil key="highlightedColor"/>
                 </label>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="302 Reviews" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZAj-Ng-BGI">
-                    <rect key="frame" x="124" y="52" width="72" height="14.5"/>
+                    <rect key="frame" x="99" y="52" width="72" height="14.5"/>
                     <fontDescription key="fontDescription" type="system" pointSize="12"/>
                     <color key="textColor" red="0.3872395833333333" green="0.3872395833333333" blue="0.3872395833333333" alpha="1" colorSpace="calibratedRGB"/>
                     <nil key="highlightedColor"/>
@@ -55,9 +55,9 @@
                     </constraints>
                 </mapView>
                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ySG-8s-ovv">
-                    <rect key="frame" x="8" y="52" width="108" height="15"/>
+                    <rect key="frame" x="8" y="52" width="83" height="15"/>
                     <constraints>
-                        <constraint firstAttribute="width" constant="108" id="X4G-eC-s8I"/>
+                        <constraint firstAttribute="width" constant="83" id="X4G-eC-s8I"/>
                         <constraint firstAttribute="height" constant="15" id="vFP-Hk-cPX"/>
                     </constraints>
                 </imageView>
