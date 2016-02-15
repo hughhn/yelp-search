@@ -42,6 +42,8 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     var categories: [Category]!
     var tableStructure: [SectionInfo]!
     
+    let yelpRed = UIColor(red: 196.0/255.0, green: 18.0/255.0, blue: 0.0, alpha: 1.0)
+    
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -176,7 +178,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 if dropdownValue == prefs.distance {
                     let dropdownImg = UIImage(named: "icon_checked_circle")
                     cell.dropdownImg.image = dropdownImg!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                    cell.dropdownImg.tintColor = UIColor.redColor()
+                    cell.dropdownImg.tintColor = yelpRed
                 } else {
                     cell.dropdownImg.image = UIImage(named: "icon_empty_circle")
                 }
@@ -195,7 +197,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
                 if dropdownValue == prefs.sortMode {
                     let dropdownImg = UIImage(named: "icon_checked_circle")
                     cell.dropdownImg.image = dropdownImg!.imageWithRenderingMode(UIImageRenderingMode.AlwaysTemplate)
-                    cell.dropdownImg.tintColor = UIColor.redColor()
+                    cell.dropdownImg.tintColor = yelpRed
                 } else {
                     cell.dropdownImg.image = UIImage(named: "icon_empty_circle")
                 }
