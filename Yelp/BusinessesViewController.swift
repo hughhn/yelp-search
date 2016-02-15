@@ -46,8 +46,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         actionBtn.setTitle("Filters", forState: UIControlState.Normal)
         actionBtn.addTarget(self, action: "actionBtnTapped", forControlEvents: UIControlEvents.TouchUpInside)
         
-        let gradientLayer = CAGradientLayer()
-//        gradientLayer.frame
+        YelpGradient.setYelpGradient(actionBtn)
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         negativeSpacer.width = -10
