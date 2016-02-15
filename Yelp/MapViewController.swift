@@ -120,6 +120,11 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         }
         let yelpAnnotation = view.annotation as! YelpAnnotation
         print(yelpAnnotation.business?.name!)
+        
+        let businessVC = BusinessViewController()
+        businessVC.business = yelpAnnotation.business
+        businessVC.coordinate = yelpAnnotation.coordinate
+        navigationController?.pushViewController(businessVC, animated: true)
     }
     
     func mapView(mapView: MKMapView, didSelectAnnotationView view: MKAnnotationView) {

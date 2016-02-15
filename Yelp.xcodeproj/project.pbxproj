@@ -10,6 +10,8 @@
 		0B1508171C70723C0096A640 /* YelpAnnotation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1508161C70723C0096A640 /* YelpAnnotation.swift */; };
 		0B15081E1C7152270096A640 /* FiltersViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B15081C1C7152270096A640 /* FiltersViewController.swift */; };
 		0B15081F1C7152270096A640 /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B15081D1C7152270096A640 /* FiltersViewController.xib */; };
+		0B1508221C71626A0096A640 /* BusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1508201C71626A0096A640 /* BusinessViewController.swift */; };
+		0B1508231C71626A0096A640 /* BusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B1508211C71626A0096A640 /* BusinessViewController.xib */; };
 		0B1E8E491C6DE0D400FEE8AC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E8E481C6DE0D400FEE8AC /* Preferences.swift */; };
 		0B1E8E4C1C6F035300FEE8AC /* DropdownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E8E4A1C6F035300FEE8AC /* DropdownCell.swift */; };
 		0B1E8E4D1C6F035300FEE8AC /* DropdownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B1E8E4B1C6F035300FEE8AC /* DropdownCell.xib */; };
@@ -45,6 +47,8 @@
 		0B1508161C70723C0096A640 /* YelpAnnotation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YelpAnnotation.swift; sourceTree = "<group>"; };
 		0B15081C1C7152270096A640 /* FiltersViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FiltersViewController.swift; sourceTree = "<group>"; };
 		0B15081D1C7152270096A640 /* FiltersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiltersViewController.xib; sourceTree = "<group>"; };
+		0B1508201C71626A0096A640 /* BusinessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessViewController.swift; sourceTree = "<group>"; };
+		0B1508211C71626A0096A640 /* BusinessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessViewController.xib; sourceTree = "<group>"; };
 		0B1E8E481C6DE0D400FEE8AC /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		0B1E8E4A1C6F035300FEE8AC /* DropdownCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropdownCell.swift; sourceTree = "<group>"; };
 		0B1E8E4B1C6F035300FEE8AC /* DropdownCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropdownCell.xib; sourceTree = "<group>"; };
@@ -181,6 +185,7 @@
 				22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */,
 				0B1E8E5A1C6FDCA700FEE8AC /* MapViewController.swift */,
 				0B15081C1C7152270096A640 /* FiltersViewController.swift */,
+				0B1508201C71626A0096A640 /* BusinessViewController.swift */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -196,6 +201,7 @@
 		9AFBD31D1C6BE9700036D85E /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				0B1508211C71626A0096A640 /* BusinessViewController.xib */,
 				0B1E8E5B1C6FDCA700FEE8AC /* MapViewController.xib */,
 				0B15081D1C7152270096A640 /* FiltersViewController.xib */,
 				0B1E8E4B1C6F035300FEE8AC /* DropdownCell.xib */,
@@ -305,6 +311,7 @@
 				222D8A6519CCF9F900D2DB53 /* LaunchScreen.xib in Resources */,
 				0B1E8E4D1C6F035300FEE8AC /* DropdownCell.xib in Resources */,
 				222D8A6219CCF9F900D2DB53 /* Images.xcassets in Resources */,
+				0B1508231C71626A0096A640 /* BusinessViewController.xib in Resources */,
 				0B1E8E511C6F0C0800FEE8AC /* SwitchCell.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -371,6 +378,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0B1508221C71626A0096A640 /* BusinessViewController.swift in Sources */,
 				9AFBD31F1C6BE99C0036D85E /* BusinessCell.swift in Sources */,
 				0B1508171C70723C0096A640 /* YelpAnnotation.swift in Sources */,
 				0B15081E1C7152270096A640 /* FiltersViewController.swift in Sources */,
