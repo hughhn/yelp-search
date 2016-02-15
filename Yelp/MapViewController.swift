@@ -130,6 +130,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         if let location = locations.first {
             let region = MKCoordinateRegionMake(location.coordinate, span)
             mapView.setRegion(region, animated: true)
+            currLocation = location
             goToLocation(location)
         }
     }
