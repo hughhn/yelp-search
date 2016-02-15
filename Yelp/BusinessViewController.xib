@@ -3,13 +3,11 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
     </dependencies>
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="BusinessViewController" customModule="Yelp" customModuleProvider="target">
             <connections>
                 <outlet property="addressLabel" destination="MbJ-jl-oxn" id="h2L-a0-kRD"/>
-                <outlet property="businessImageView" destination="pSp-AA-dLQ" id="AHM-PC-9fR"/>
                 <outlet property="categoriesLabel" destination="Gj6-Q9-lEh" id="8NB-WI-Rdj"/>
                 <outlet property="distanceLabel" destination="hC8-Wd-kwc" id="9lG-Zj-VOm"/>
                 <outlet property="mapView" destination="0MQ-0N-Ba8" id="wVQ-uo-Xb7"/>
@@ -80,21 +78,13 @@
                         <constraint firstAttribute="height" constant="8" id="qIX-Wy-PEY"/>
                     </constraints>
                 </view>
-                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="pSp-AA-dLQ">
-                    <rect key="frame" x="8" y="243" width="304" height="251"/>
-                    <constraints>
-                        <constraint firstAttribute="width" secondItem="pSp-AA-dLQ" secondAttribute="height" multiplier="304:251" id="UrO-zi-ZmC"/>
-                    </constraints>
-                </imageView>
             </subviews>
             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
             <constraints>
                 <constraint firstItem="0MQ-0N-Ba8" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="0Tr-ks-0Pm"/>
                 <constraint firstAttribute="trailing" secondItem="hC8-Wd-kwc" secondAttribute="trailing" constant="8" id="1kz-9h-1eS"/>
-                <constraint firstItem="pSp-AA-dLQ" firstAttribute="top" secondItem="qht-0J-PmK" secondAttribute="bottom" constant="8" id="6D5-d0-3z0"/>
                 <constraint firstItem="hC8-Wd-kwc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="urN-po-nGc" secondAttribute="trailing" constant="10" id="79k-kb-Hmm"/>
                 <constraint firstItem="MbJ-jl-oxn" firstAttribute="top" secondItem="0MQ-0N-Ba8" secondAttribute="bottom" constant="8" id="8kX-n2-fKQ"/>
-                <constraint firstAttribute="trailing" secondItem="pSp-AA-dLQ" secondAttribute="trailing" constant="8" id="AIZ-ca-iZA"/>
                 <constraint firstItem="qht-0J-PmK" firstAttribute="top" secondItem="MbJ-jl-oxn" secondAttribute="bottom" constant="8" id="CE1-fo-RSv"/>
                 <constraint firstItem="urN-po-nGc" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="Cpu-8L-pb3"/>
                 <constraint firstItem="urN-po-nGc" firstAttribute="top" secondItem="i5M-Pr-FkT" secondAttribute="top" constant="20" id="GgD-3Z-Kla"/>
@@ -106,7 +96,6 @@
                 <constraint firstItem="ySG-8s-ovv" firstAttribute="top" secondItem="urN-po-nGc" secondAttribute="bottom" constant="8" id="S3z-IU-E8s"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="MbJ-jl-oxn" secondAttribute="trailing" constant="8" id="VYN-rh-w9I"/>
                 <constraint firstAttribute="trailing" secondItem="SqN-hB-dkD" secondAttribute="trailing" constant="8" id="bzk-1a-7dm"/>
-                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="pSp-AA-dLQ" secondAttribute="bottom" constant="8" id="hda-SM-xGV"/>
                 <constraint firstAttribute="trailing" secondItem="qht-0J-PmK" secondAttribute="trailing" id="kfz-JV-1ME"/>
                 <constraint firstItem="0MQ-0N-Ba8" firstAttribute="top" secondItem="Gj6-Q9-lEh" secondAttribute="bottom" constant="7.5" id="oZr-Ka-Agl"/>
                 <constraint firstItem="qht-0J-PmK" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" id="qWk-Bo-ITd"/>
@@ -114,7 +103,6 @@
                 <constraint firstItem="Gj6-Q9-lEh" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="upU-m6-TTf"/>
                 <constraint firstItem="ZAj-Ng-BGI" firstAttribute="top" secondItem="urN-po-nGc" secondAttribute="bottom" constant="8" id="wmn-h0-7I1"/>
                 <constraint firstItem="ySG-8s-ovv" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="wpV-Bt-Agz"/>
-                <constraint firstItem="pSp-AA-dLQ" firstAttribute="leading" secondItem="i5M-Pr-FkT" secondAttribute="leading" constant="8" id="yVg-DU-zfO"/>
                 <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="Gj6-Q9-lEh" secondAttribute="trailing" constant="8" id="z75-px-qTt"/>
             </constraints>
             <point key="canvasLocation" x="347" y="267"/>

@@ -18,14 +18,21 @@ class BusinessViewController: UIViewController {
     @IBOutlet weak var ratingsCountLabel: UILabel!
     @IBOutlet weak var categoriesLabel: UILabel!
     @IBOutlet weak var addressLabel: UILabel!
-    @IBOutlet weak var businessImageView: UIImageView!
+    
     @IBOutlet weak var mapView: MKMapView!
     
     var business: Business!
     var coordinate: CLLocationCoordinate2D!
     
+    override func viewDidLayoutSubviews() {
+        nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
+        navigationController?.navigationBar.translucent = false;
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        navigationController?.navigationBar.translucent = false;
 
         // Do any additional setup after loading the view.
         nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
@@ -35,24 +42,18 @@ class BusinessViewController: UIViewController {
         ratingsCountLabel.text = "\(business.reviewCount!) Reviews"
         addressLabel.text = business.address
         categoriesLabel.text = business.categories
-        
-        businessImageView.setImageWithURL(business.imageURL!)
         ratingImageView.setImageWithURL(business.ratingImageURL!)
         
-        businessImageView.layer.cornerRadius = 5
+        let annotation = MKPointAnnotation()
+        annotation.coordinate = business.coordinate!
+        mapView.addAnnotation(annotation)
         
-        let centerLocation = CLLocation(latitude: coordinate.latitude, longitude: coordinate.longitude)
-        goToLocation(centerLocation)
+        goToLocation(business.coordinate!)
     }
     
-    func goToLocation(location: CLLocation) {
-        let span = MKCoordinateSpanMake(0.05, 0.05)
-        let region = MKCoordinateRegionMake(location.coordinate, span)
+    func goToLocation(location: CLLocationCoordinate2D) {
+        let region = MKCoordinateRegionMakeWithDistance(location, 1000, 1000)
         mapView.setRegion(region, animated: false)
-    }
-    
-    override func layoutSublayersOfLayer(layer: CALayer) {
-        nameLabel.preferredMaxLayoutWidth = nameLabel.frame.size.width
     }
 
     override func didReceiveMemoryWarning() {
