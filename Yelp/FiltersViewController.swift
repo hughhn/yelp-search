@@ -55,6 +55,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         leftBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         leftBtn.setTitle("Cancel", forState: UIControlState.Normal)
         leftBtn.addTarget(self, action: "onCancel", forControlEvents: UIControlEvents.TouchUpInside)
+        YelpGradient.setYelpGradient(leftBtn)
         
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         negativeSpacer.width = -10
@@ -68,7 +69,8 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         rightBtn.layer.cornerRadius = 5
         rightBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         rightBtn.setTitle("Search", forState: UIControlState.Normal)
-        leftBtn.addTarget(self, action: "onSearch", forControlEvents: UIControlEvents.TouchUpInside)
+        rightBtn.addTarget(self, action: "onSearch", forControlEvents: UIControlEvents.TouchUpInside)
+        YelpGradient.setYelpGradient(rightBtn)
         
         let negativeSpacer2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         negativeSpacer2.width = -10

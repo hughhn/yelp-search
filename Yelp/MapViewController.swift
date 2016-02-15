@@ -66,6 +66,8 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         actionBtn.setTitle("Filters", forState: UIControlState.Normal)
         actionBtn.addTarget(self, action: "actionBtnTapped", forControlEvents: UIControlEvents.TouchUpInside)
         
+        YelpGradient.setYelpGradient(actionBtn)
+        
         let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         negativeSpacer.width = -10
         let leftBarBtn = UIBarButtonItem(customView: actionBtn)
