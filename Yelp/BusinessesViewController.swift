@@ -160,6 +160,12 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        
+        let businessVC = BusinessViewController()
+        let business = businesses[indexPath.row]
+        businessVC.business = business
+        businessVC.coordinate = business.coordinate
+        navigationController?.pushViewController(businessVC, animated: true)
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
