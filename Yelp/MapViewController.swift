@@ -30,7 +30,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     var locationManager : CLLocationManager!
     var searchBar = UISearchBar()
-    var leftBarBtn: UIBarButtonItem!
+    var actionBtn: UIButton!
     
     var businesses: [Business]? {
         didSet {
@@ -54,8 +54,22 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
         searchBar.delegate = self
-        leftBarBtn = UIBarButtonItem(title: "Filters", style: .Plain, target: self, action: "actionBtnTapped")
-        navigationItem.leftBarButtonItem = leftBarBtn
+//        leftBarBtn = UIBarButtonItem(title: "Filters", style: .Plain, target: self, action: "actionBtnTapped")
+//        navigationItem.leftBarButtonItem = leftBarBtn
+        
+        actionBtn = UIButton(type: .System)
+        actionBtn.frame = CGRectMake(0, 0, 60, 30);
+        actionBtn.layer.borderColor = UIColor.blackColor().CGColor
+        actionBtn.layer.borderWidth = 0.2
+        actionBtn.layer.cornerRadius = 5
+        actionBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        actionBtn.setTitle("Filters", forState: UIControlState.Normal)
+        actionBtn.addTarget(self, action: "actionBtnTapped", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        negativeSpacer.width = -10
+        let leftBarBtn = UIBarButtonItem(customView: actionBtn)
+        navigationItem.leftBarButtonItems = [negativeSpacer, leftBarBtn]
         
         // set the region to display, this also sets a correct zoom level
         // set starting center location in San Francisco
@@ -207,18 +221,18 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
-        leftBarBtn.title = "Search"
+        actionBtn.setTitle("Search", forState: UIControlState.Normal)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
-        leftBarBtn.title = "Filters"
+        actionBtn.setTitle("Filters", forState: UIControlState.Normal)
         searchBar.text = ""
         searchBar.resignFirstResponder()
     }
     
     func actionBtnTapped() {
-        if leftBarBtn.title == "Search" {
+        if actionBtn.currentTitle == "Search" {
             delegate?.mapViewController?(self, locationUpdated: currLocation, newPrefs: nil, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 self.businesses = businesses
