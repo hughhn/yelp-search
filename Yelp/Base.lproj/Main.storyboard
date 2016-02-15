@@ -138,11 +138,8 @@
                             <constraint firstItem="lDI-al-8TM" firstAttribute="leading" secondItem="XhR-oz-92f" secondAttribute="leading" id="dgq-dl-FuT"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="rJ7-jb-TZO">
-                        <barButtonItem key="leftBarButtonItem" title="Filters" id="1DJ-1A-yRN"/>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="rJ7-jb-TZO"/>
                     <connections>
-                        <outlet property="actionBtn" destination="1DJ-1A-yRN" id="vDf-Co-fif"/>
                         <outlet property="mapBtn" destination="6ny-Ct-TQG" id="JV6-wB-BKL"/>
                         <outlet property="tableView" destination="lDI-al-8TM" id="Hme-Pw-eEb"/>
                     </connections>

@@ -21,14 +21,12 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     var loadingMoreView:InfiniteScrollActivityView?
     
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var actionBtn: UIBarButtonItem!
     @IBOutlet weak var mapBtn: UIButton!
+    
+    var actionBtn: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        actionBtn.target = self
-        actionBtn.action = "actionBtnTapped"
         
         tableView.dataSource = self
         tableView.delegate = self
@@ -36,6 +34,9 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         tableView.estimatedRowHeight = 81
         tableView.separatorInset = UIEdgeInsetsZero
         tableView.hidden = true
+        
+        actionBtn = UIBarButtonItem(title: "Filters", style: .Plain, target: self, action: "actionBtnTapped")
+        navigationItem.leftBarButtonItem = actionBtn
         
         // create the search bar programatically since you won't be
         // able to drag one onto the navigation bar
