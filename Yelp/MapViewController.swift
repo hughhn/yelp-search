@@ -19,6 +19,7 @@ import CoreLocation
     optional func dismissMapViewController(mapViewController: MapViewController)
     
     optional func getCurrPrefs() -> Preferences
+    optional func getCurrSearchTerm() -> String
 }
 
 class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate, MKMapViewDelegate, FiltersViewControllerDelegate {
@@ -54,8 +55,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
         searchBar.delegate = self
-//        leftBarBtn = UIBarButtonItem(title: "Filters", style: .Plain, target: self, action: "actionBtnTapped")
-//        navigationItem.leftBarButtonItem = leftBarBtn
+        searchBar.placeholder = delegate?.getCurrSearchTerm?()
         
         actionBtn = UIButton(type: .System)
         actionBtn.frame = CGRectMake(0, 0, 60, 30);
@@ -221,18 +221,20 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
+        searchBar.text = ""
         actionBtn.setTitle("Search", forState: UIControlState.Normal)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
-        actionBtn.setTitle("Filters", forState: UIControlState.Normal)
         searchBar.text = ""
+        actionBtn.setTitle("Filters", forState: UIControlState.Normal)
         searchBar.resignFirstResponder()
     }
     
     func actionBtnTapped() {
         if actionBtn.currentTitle == "Search" {
+            searchBar.placeholder = searchBar.text!
             delegate?.mapViewController?(self, locationUpdated: currLocation, newPrefs: nil, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.mapView.removeAnnotations(self.mapView.annotations)
                 self.businesses = businesses

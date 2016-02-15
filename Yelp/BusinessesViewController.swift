@@ -54,6 +54,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         // create the search bar programatically since you won't be
         // able to drag one onto the navigation bar
         searchBar.sizeToFit()
+        searchBar.placeholder = currSearchTerm
         
         // the UIViewController comes with a navigationItem property
         // this will automatically be initialized for you if when the
@@ -128,6 +129,10 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         return currPrefs
     }
     
+    func getCurrSearchTerm() -> String {
+        return currSearchTerm!
+    }
+    
     func doSearch(offset: Int?, searchCompletion: (([Business]!, NSError!) -> Void)?) {
         if offset == nil {
             businesses.removeAll()
@@ -137,6 +142,7 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         if currSearchTerm == nil {
             currSearchTerm = "Restaurants"
         }
+        searchBar.placeholder = currSearchTerm!
         Business.searchWithTerm(currSearchTerm!, sort: currPrefs.sortMode, distance: currPrefs.distance, categories: currPrefs.categories, deals: currPrefs.deal, offset: offset, location: currLocation,
             completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 
@@ -157,13 +163,14 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     func searchBarTextDidBeginEditing(searchBar: UISearchBar) {
         searchBar.showsCancelButton = true
+        searchBar.text = ""
         actionBtn.setTitle("Search", forState: UIControlState.Normal)
     }
     
     func searchBarCancelButtonClicked(searchBar: UISearchBar) {
         searchBar.showsCancelButton = false
-        actionBtn.setTitle("Filters", forState: UIControlState.Normal)
         searchBar.text = ""
+        actionBtn.setTitle("Filters", forState: UIControlState.Normal)
         searchBar.resignFirstResponder()
     }
 
@@ -227,8 +234,8 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         print(actionBtn.currentTitle)
         if actionBtn.currentTitle == "Search" {
             currSearchTerm = searchBar.text!
-            searchBarCancelButtonClicked(searchBar)
             doSearch(nil, searchCompletion: nil)
+            searchBarCancelButtonClicked(searchBar)
         } else {
             let filtersVC = FiltersViewController()
             let navVC = UINavigationController(rootViewController: filtersVC)
