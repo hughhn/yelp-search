@@ -34,22 +34,16 @@ class SectionInfo {
 }
 
 class FiltersViewController: UIViewController, UITableViewDataSource, UITableViewDelegate, SwitchCellDelegate {
-    
+
     @IBOutlet weak var tableView: UITableView!
     weak var delegate: FiltersViewControllerDelegate?
-    
+
     var prefs: Preferences!
     var categories: [Category]!
     var tableStructure: [SectionInfo]!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let leftBarBtn = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "onCancel")
-        let rightBarBtn = UIBarButtonItem(title: "Search", style: .Plain, target: self, action: "onSearch")
-        navigationItem.leftBarButtonItem = leftBarBtn
-        navigationItem.rightBarButtonItem = rightBarBtn
-        navigationItem.title = "Filters"
         
         initCategoriesSelected()
         initTableView()
@@ -178,17 +172,17 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             categories[indexPath.row].selected = value
         }
     }
-    
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-    func onCancel() {
+    @IBAction func onCancel(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
     }
-    
-    func onSearch() {
+
+    @IBAction func onSearch(sender: AnyObject) {
         dismissViewControllerAnimated(true, completion: nil)
         delegate?.filtersViewController?(self, didUpdatePrefs: preferencesFromTableData())
     }
@@ -217,5 +211,5 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
             Category(name: "Vietnamese", code: "vietnamese", selected: false)
         ]
     }
-    
+
 }

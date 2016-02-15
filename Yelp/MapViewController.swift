@@ -14,12 +14,14 @@ import CoreLocation
     
     optional func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, completion: (([Business]!, NSError!) -> Void)!)
     
-    optional func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!)
+    optional func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, newPrefs: Preferences?, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!)
     
     optional func dismissMapViewController(mapViewController: MapViewController)
+    
+    optional func getCurrPrefs() -> Preferences
 }
 
-class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate, MKMapViewDelegate {
+class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBarDelegate, MKMapViewDelegate, FiltersViewControllerDelegate {
 
     weak var delegate: MapViewControllerDelegate?
     @IBOutlet weak var mapView: MKMapView!
@@ -198,17 +200,36 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
     }
     
     func searchTapped() {
-        delegate?.mapViewController?(self, locationUpdated: currLocation, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
-            self.businesses = businesses
+        if leftBarBtn.title == "Search" {
+            delegate?.mapViewController?(self, locationUpdated: currLocation, newPrefs: nil, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+                self.businesses = businesses
+                
+                //            for (business) in self.businesses! {
+                //                print(business.name!)
+                //                print(business.address!)
+                //            }
+                self.mapView.removeAnnotations(self.mapView.annotations)
+                self.loadAnnotations()
+            })
+            searchBarCancelButtonClicked(searchBar)
+        } else {
+            // Filters tapped
+            let filtersVC = FiltersViewController()
+            let navVC = UINavigationController(rootViewController: filtersVC)
+            let prefs = delegate?.getCurrPrefs!()
             
-//            for (business) in self.businesses! {
-//                print(business.name!)
-//                print(business.address!)
-//            }
+            filtersVC.delegate = self
+            filtersVC.prefs = prefs!.copy() as! Preferences
+            navigationController?.presentViewController(navVC, animated: true, completion: nil)
+        }
+    }
+    
+    func filtersViewController(filtersViewController: FiltersViewController, didUpdatePrefs newPrefs: Preferences) {
+        delegate?.mapViewController?(self, locationUpdated: currLocation, newPrefs: newPrefs, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
+            self.businesses = businesses
             self.mapView.removeAnnotations(self.mapView.annotations)
             self.loadAnnotations()
         })
-        searchBarCancelButtonClicked(searchBar)
     }
 
     /*

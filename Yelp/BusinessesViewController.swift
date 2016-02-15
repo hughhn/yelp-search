@@ -83,14 +83,21 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         })
     }
     
-    func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!) {
+    func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, newPrefs: Preferences?, searchTerm: String, completion: (([Business]!, NSError!) -> Void)!) {
         currSearchTerm = searchTerm
         if locationUpdated != nil {
             currLocation = locationUpdated!
         }
+        if newPrefs != nil {
+            currPrefs = newPrefs!
+        }
         doSearch(nil, searchCompletion: { (businesses: [Business]!, error: NSError!) -> Void in
             completion(businesses, error)
         })
+    }
+    
+    func getCurrPrefs() -> Preferences {
+        return currPrefs
     }
     
     func doSearch(offset: Int?, searchCompletion: (([Business]!, NSError!) -> Void)?) {
