@@ -46,8 +46,10 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         actionBtn.setTitle("Filters", forState: UIControlState.Normal)
         actionBtn.addTarget(self, action: "actionBtnTapped", forControlEvents: UIControlEvents.TouchUpInside)
         
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        negativeSpacer.width = -10
         let leftBarBtn = UIBarButtonItem(customView: actionBtn)
-        navigationItem.leftBarButtonItem = leftBarBtn
+        navigationItem.leftBarButtonItems = [negativeSpacer, leftBarBtn]
         
         // create the search bar programatically since you won't be
         // able to drag one onto the navigation bar
