@@ -72,11 +72,22 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
         mapVC.businesses = self.businesses
         
         //navigationController?.presentViewController(mapVC, animated: true, completion: nil)
-        navigationController?.pushViewController(mapVC, animated: true)
+        
+        UIView.animateWithDuration(0.75, animations: { () -> Void in
+            UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
+            self.navigationController?.pushViewController(mapVC, animated: false)
+            UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromRight, forView: self.navigationController!.view!, cache: false)
+        })
     }
     
     func dismissMapViewController(mapViewController: MapViewController) {
-        navigationController?.popViewControllerAnimated(true)
+        //navigationController?.popViewControllerAnimated(true)
+        
+        UIView.animateWithDuration(0.75, animations: { () -> Void in
+            UIView.setAnimationCurve(UIViewAnimationCurve.EaseInOut)
+            self.navigationController?.popViewControllerAnimated(false)
+            UIView.setAnimationTransition(UIViewAnimationTransition.FlipFromLeft, forView: self.navigationController!.view!, cache: false)
+        })
     }
     
     func mapViewController(mapViewController: MapViewController, locationUpdated: CLLocation?, completion: (([Business]!, NSError!) -> Void)!) {

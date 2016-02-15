@@ -175,11 +175,12 @@
 		22AAAA9D1AEA1EC600A544AF /* View Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				0B1E8E4A1C6F035300FEE8AC /* DropdownCell.swift */,
+				9AFBD31E1C6BE99C0036D85E /* BusinessCell.swift */,
+				0B1E8E4E1C6F0C0800FEE8AC /* SwitchCell.swift */,
 				22AAAA9B1AEA1EC300A544AF /* BusinessesViewController.swift */,
 				0B1E8E5A1C6FDCA700FEE8AC /* MapViewController.swift */,
-				0B1E8E5B1C6FDCA700FEE8AC /* MapViewController.xib */,
 				0B15081C1C7152270096A640 /* FiltersViewController.swift */,
-				0B15081D1C7152270096A640 /* FiltersViewController.xib */,
 			);
 			name = "View Controllers";
 			sourceTree = "<group>";
@@ -195,10 +196,9 @@
 		9AFBD31D1C6BE9700036D85E /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				0B1E8E4A1C6F035300FEE8AC /* DropdownCell.swift */,
+				0B1E8E5B1C6FDCA700FEE8AC /* MapViewController.xib */,
+				0B15081D1C7152270096A640 /* FiltersViewController.xib */,
 				0B1E8E4B1C6F035300FEE8AC /* DropdownCell.xib */,
-				9AFBD31E1C6BE99C0036D85E /* BusinessCell.swift */,
-				0B1E8E4E1C6F0C0800FEE8AC /* SwitchCell.swift */,
 				0B1E8E4F1C6F0C0800FEE8AC /* SwitchCell.xib */,
 			);
 			name = Views;
