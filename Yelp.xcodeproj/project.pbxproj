@@ -12,6 +12,7 @@
 		0B15081F1C7152270096A640 /* FiltersViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B15081D1C7152270096A640 /* FiltersViewController.xib */; };
 		0B1508221C71626A0096A640 /* BusinessViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1508201C71626A0096A640 /* BusinessViewController.swift */; };
 		0B1508231C71626A0096A640 /* BusinessViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B1508211C71626A0096A640 /* BusinessViewController.xib */; };
+		0B1508251C71A2CA0096A640 /* Constants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1508241C71A2CA0096A640 /* Constants.swift */; };
 		0B1E8E491C6DE0D400FEE8AC /* Preferences.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E8E481C6DE0D400FEE8AC /* Preferences.swift */; };
 		0B1E8E4C1C6F035300FEE8AC /* DropdownCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0B1E8E4A1C6F035300FEE8AC /* DropdownCell.swift */; };
 		0B1E8E4D1C6F035300FEE8AC /* DropdownCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 0B1E8E4B1C6F035300FEE8AC /* DropdownCell.xib */; };
@@ -49,6 +50,7 @@
 		0B15081D1C7152270096A640 /* FiltersViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = FiltersViewController.xib; sourceTree = "<group>"; };
 		0B1508201C71626A0096A640 /* BusinessViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BusinessViewController.swift; sourceTree = "<group>"; };
 		0B1508211C71626A0096A640 /* BusinessViewController.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = BusinessViewController.xib; sourceTree = "<group>"; };
+		0B1508241C71A2CA0096A640 /* Constants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Constants.swift; sourceTree = "<group>"; };
 		0B1E8E481C6DE0D400FEE8AC /* Preferences.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Preferences.swift; sourceTree = "<group>"; };
 		0B1E8E4A1C6F035300FEE8AC /* DropdownCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DropdownCell.swift; sourceTree = "<group>"; };
 		0B1E8E4B1C6F035300FEE8AC /* DropdownCell.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropdownCell.xib; sourceTree = "<group>"; };
@@ -128,6 +130,7 @@
 				222D8A6319CCF9F900D2DB53 /* LaunchScreen.xib */,
 				222D8A5819CCF9F900D2DB53 /* Supporting Files */,
 				0B1E8E581C6F5E4000FEE8AC /* InfiniteScrollActivityView.swift */,
+				0B1508241C71A2CA0096A640 /* Constants.swift */,
 			);
 			path = Yelp;
 			sourceTree = "<group>";
@@ -383,6 +386,7 @@
 				0B1508171C70723C0096A640 /* YelpAnnotation.swift in Sources */,
 				0B15081E1C7152270096A640 /* FiltersViewController.swift in Sources */,
 				0B1E8E531C6F317E00FEE8AC /* Category.swift in Sources */,
+				0B1508251C71A2CA0096A640 /* Constants.swift in Sources */,
 				22AAAA9C1AEA1EC300A544AF /* BusinessesViewController.swift in Sources */,
 				0B1E8E501C6F0C0800FEE8AC /* SwitchCell.swift in Sources */,
 				0B1E8E591C6F5E4000FEE8AC /* InfiniteScrollActivityView.swift in Sources */,

@@ -42,8 +42,6 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     var categories: [Category]!
     var tableStructure: [SectionInfo]!
     
-    let yelpRed = UIColor(red: 196.0/255.0, green: 18.0/255.0, blue: 0.0, alpha: 1.0)
-    
     override func viewDidLoad() {
         super.viewDidLoad()
 
