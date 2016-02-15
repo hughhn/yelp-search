@@ -47,7 +47,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         searchBar.sizeToFit()
         navigationItem.titleView = searchBar
         searchBar.delegate = self
-        leftBarBtn = UIBarButtonItem(title: "Filters", style: .Plain, target: self, action: "searchTapped")
+        leftBarBtn = UIBarButtonItem(title: "Filters", style: .Plain, target: self, action: "actionBtnTapped")
         navigationItem.leftBarButtonItem = leftBarBtn
         
         // set the region to display, this also sets a correct zoom level
@@ -199,7 +199,7 @@ class MapViewController: UIViewController, CLLocationManagerDelegate, UISearchBa
         searchBar.resignFirstResponder()
     }
     
-    func searchTapped() {
+    func actionBtnTapped() {
         if leftBarBtn.title == "Search" {
             delegate?.mapViewController?(self, locationUpdated: currLocation, newPrefs: nil, searchTerm: searchBar.text!, completion: { (businesses: [Business]!, error: NSError!) -> Void in
                 self.businesses = businesses
