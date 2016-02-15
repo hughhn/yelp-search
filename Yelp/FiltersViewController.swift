@@ -44,12 +44,36 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        let leftBarBtn = UIBarButtonItem(title: "Cancel", style: .Plain, target: self, action: "onCancel")
-        let rightBarBtn = UIBarButtonItem(title: "Search", style: .Plain, target: self, action: "onSearch")
-        navigationItem.leftBarButtonItem = leftBarBtn
-        navigationItem.rightBarButtonItem = rightBarBtn
+
         navigationItem.title = "Filters"
+        
+        let leftBtn = UIButton(type: .System)
+        leftBtn.frame = CGRectMake(0, 0, 60, 30);
+        leftBtn.layer.borderColor = UIColor.blackColor().CGColor
+        leftBtn.layer.borderWidth = 0.2
+        leftBtn.layer.cornerRadius = 5
+        leftBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        leftBtn.setTitle("Cancel", forState: UIControlState.Normal)
+        leftBtn.addTarget(self, action: "onCancel", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let negativeSpacer = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        negativeSpacer.width = -10
+        let leftBarBtn = UIBarButtonItem(customView: leftBtn)
+        navigationItem.leftBarButtonItems = [negativeSpacer, leftBarBtn]
+        
+        let rightBtn = UIButton(type: .System)
+        rightBtn.frame = CGRectMake(0, 0, 60, 30);
+        rightBtn.layer.borderColor = UIColor.blackColor().CGColor
+        rightBtn.layer.borderWidth = 0.2
+        rightBtn.layer.cornerRadius = 5
+        rightBtn.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        rightBtn.setTitle("Search", forState: UIControlState.Normal)
+        leftBtn.addTarget(self, action: "onSearch", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        let negativeSpacer2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
+        negativeSpacer2.width = -10
+        let rightBarBtn = UIBarButtonItem(customView: rightBtn)
+        navigationItem.rightBarButtonItems = [rightBarBtn, negativeSpacer2]
         
         initCategoriesSelected()
         initTableView()
