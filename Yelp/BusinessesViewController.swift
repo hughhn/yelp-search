@@ -27,6 +27,9 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        actionBtn.target = self
+        actionBtn.action = "actionBtnTapped"
+        
         tableView.dataSource = self
         tableView.delegate = self
         tableView.rowHeight = UITableViewAutomaticDimension
@@ -189,27 +192,19 @@ class BusinessesViewController: UIViewController, UITableViewDataSource, UITable
     
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
-        
-        let navigationController = segue.destinationViewController as! UINavigationController
-        let filtersViewController = navigationController.topViewController as! FiltersViewController
-        
-        filtersViewController.delegate = self
-        filtersViewController.prefs = currPrefs.copy() as! Preferences
-    }
-    
-    override func shouldPerformSegueWithIdentifier(identifier: String, sender: AnyObject?) -> Bool {
-        if identifier == "filtersSegue" && actionBtn.title == "Search" {
+    func actionBtnTapped() {
+        if actionBtn.title == "Search" {
             currSearchTerm = searchBar.text!
             searchBarCancelButtonClicked(searchBar)
             doSearch(nil, searchCompletion: nil)
-            return false
+        } else {
+            let filtersVC = FiltersViewController()
+            let navVC = UINavigationController(rootViewController: filtersVC)
+            
+            filtersVC.delegate = self
+            filtersVC.prefs = currPrefs.copy() as! Preferences
+            navigationController?.presentViewController(navVC, animated: true, completion: nil)
         }
-        
-        return true
-    }
 
+    }
 }
