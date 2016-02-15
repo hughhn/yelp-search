@@ -75,7 +75,7 @@ class FiltersViewController: UIViewController, UITableViewDataSource, UITableVie
         let negativeSpacer2 = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FixedSpace, target: nil, action: nil)
         negativeSpacer2.width = -10
         let rightBarBtn = UIBarButtonItem(customView: rightBtn)
-        navigationItem.rightBarButtonItems = [rightBarBtn, negativeSpacer2]
+        navigationItem.rightBarButtonItems = [negativeSpacer2, rightBarBtn]
         
         initCategoriesSelected()
         initTableView()
